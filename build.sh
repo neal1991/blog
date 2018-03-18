@@ -29,7 +29,7 @@ git commit -m "$msg"
 git pull origin master
 cd ../../neal1991.github.io/
 git pull
-git push remote master
+git push all master
 
 # Come Back
 cd ..

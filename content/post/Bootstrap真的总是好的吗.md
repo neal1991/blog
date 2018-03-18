@@ -1,12 +1,16 @@
-原文地址：Bootstrap considered harmful
+---
+title: "About"
+date: 2018-03-18T10:17:38+08:00
+draft: true
+---
+> 原文地址：Bootstrap considered harmful
 
-原文作者：Hidde de Vries
+> 原文作者：Hidde de Vries
 
-译文出自：neal
+> 译文出自：neal
 
-译者： Neal
+> 译者： Neal
 
-个人主页：http://neal1991.pythonanywhere.com
 
 这些年Bootstrap已经在前端项目中流行起来，它能够带来很多好处。然而，但是如果以你们的团队已经有了在职的前端开发人员，我觉得最好还是不要用Bootstrap，在某些地方，弊大于利。
 

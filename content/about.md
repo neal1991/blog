@@ -1,6 +1,10 @@
 ---
 title: "About"
-date: 2018-03-18T10:17:38+08:00
-draft: true
+date: "2018-03-18"
+layout: "about"
+menu: "main"
+weight: 50
 ---
+
+全栈开发工程师进击
 
