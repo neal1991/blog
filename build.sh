@@ -27,7 +27,7 @@ git commit -m "$msg"
 
 # Push source and build repos.
 git pull origin master
-git push origin master
+git push all
 
 # Come Back
 cd ..
