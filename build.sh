@@ -9,7 +9,7 @@ fi
 # Push Hugo content 
 git add -A
 git commit -m "$msg"
-git pull orgin master
+git pull origin master
 git push origin master
 
 
