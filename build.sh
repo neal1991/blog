@@ -9,6 +9,7 @@ fi
 # Push Hugo content 
 git add -A
 git commit -m "$msg"
+git pull orgin master
 git push origin master
 
 
@@ -25,6 +26,7 @@ git add -A
 git commit -m "$msg"
 
 # Push source and build repos.
+git pull origin master
 git push origin master
 
 # Come Back
