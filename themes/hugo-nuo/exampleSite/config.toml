@@ -1,6 +1,6 @@
-baseURL = "https://neal1991.github.io"
+baseURL = "http://localhost:1313"
 languageCode = "en"
-title = "Neal's Blog"
+title = "Hugo Blog"
 theme = "hugo-nuo"
 enableRobotsTXT = true
 PygmentsCodeFences = true
@@ -36,20 +36,35 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 
 # Add your own params here
 [params]
-  author = "Neal"
+  author = "Ritchie Zhu"
   avatar = "/img/avatar.jpg"
-  seotitle = "Neal 的博客"
-  subtitle = "前端技术"
-  description = "全栈工程师的进击"
+  seotitle = "Hugo Blog (SEO Version)"
+  subtitle = "~ Keep It Simple & Stupid ~"
+  description = "Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again."
   paginate = 10
 
   # Choose your social networks
-  email = "bing.ecnu@gmail.com"
+  email = "name@domain.com"
   github = "github_username"
   twitter = "twitter_username"
   linkedin = "linkedin_username"
   weibo = "weibo_username"
-
+  wechat= "/img/qrcode.jpg" # Replace with your wechat qrcode image
+  # facebook = "facebook_username"
+  # google = "googlplus_id_number"
+  # instagram = "instagram_username"
+  # youtube = "youtube_username"
+  # vimeo = "vimeo_username"
+  # medium = "medium_username"
+  # quora = "quora_username"
+  # pinterest = "pinterest_username"
+  # dribbble = "dribbble_username"
+  # behance = "behance_username"
+  # jsfiddle = "jsfiddle_username"
+  # codepen = "codepen_username"
+  # zhihu = "zhihu_username"
+  # douban = "douban_username"
+  # bilibili = "bilibili_id_number"
 
   # Changyan Comments (China Only)
   changyan = false
