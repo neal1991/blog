@@ -1,3 +1,16 @@
+---
+title: "sftp没有关闭session导致服务器sshd进程未关闭"
+author: Neal
+description: "项目中需要用Sftp上传下载文件，通过jsch中的sftp实现。代码上了服务器之后，发觉服务器多了很多进程没有被关闭。 
+ 
+连接sftp代码： protected boolean connectToServer() {
+        try {
+            JSch jsch = new JSch();
+            jsch.getSession(userName, ho"
+tags: [服务器,sftp]
+catefories: [java开发]
+date: "2016-07-28 17:09:59"
+---
 项目中需要用Sftp上传下载文件，通过jsch中的sftp实现。代码上了服务器之后，发觉服务器多了很多进程没有被关闭。
 ![这里写图片描述](http://img.blog.csdn.net/20160728170459770)
 连接sftp代码：

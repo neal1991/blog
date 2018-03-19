@@ -1,3 +1,13 @@
+---
+title: "在pythonanywhere部署你的第一个应用"
+author: Neal
+description: "pythonanywhere是一个免费的托管python的代码，可以测试你的web应用，用起来还是比较方便的，现在就来介绍如何在pythonanywhere部署你的应用。 
+下载你的代码 
+我的代码是托管在github，我们首先从github下代码：git clone https://github.com/<username>/my-first-blog.git产生一个virtualenvcd my"
+tags: [web应用]
+catefories: [web前端]
+date: "2015-10-21 21:03:10"
+---
 pythonanywhere是一个免费的托管python的代码，可以测试你的web应用，用起来还是比较方便的，现在就来介绍如何在pythonanywhere部署你的应用。
 下载你的代码
 我的代码是托管在github，我们首先从github下代码：

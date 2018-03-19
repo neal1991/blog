@@ -1,3 +1,14 @@
+---
+title: "opencv视频流的读取和处理"
+author: Neal
+description: "Opencv提供一个简单易用的框架以提取视频文件和USB摄像头中的图像帧，如果只是想读取某个视频，你只需要创建一个VideoCapture实例，然后在循环中提取每一帧。下面是一个简单的代码
+#include<opencv2\core\core.hpp>
+#include<opencv2\imgproc\imgproc.hpp>
+#include<opencv2\highgui\highgui.hpp"
+tags: [videocapture,opencv]
+catefories: [计算机视觉]
+date: "2015-04-12 13:16:58"
+---
  1. Opencv提供一个简单易用的框架以提取视频文件和USB摄像头中的图像帧，如果只是想读取某个视频，你只需要创建一个VideoCapture实例，然后在循环中提取每一帧。下面是一个简单的代码
 
 ```

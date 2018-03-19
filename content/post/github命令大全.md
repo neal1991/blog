@@ -1,3 +1,15 @@
+---
+title: "github命令大全"
+author: Neal
+description: "github是一种开源的版本控制工具，现在已经得到很多人的应用。所以想介绍一下github的一些使用。github安装github提供了桌面客户端，我们也可以通过命令行的方式来进行控制。 
+windows 
+https://windows.github.com 
+mac 
+https://mac.github.com配置工具对于本地版本配置用户信息git config --global user.n"
+tags: [github]
+catefories: [web前端]
+date: "2015-10-25 22:30:00"
+---
 github是一种开源的版本控制工具，现在已经得到很多人的应用。所以想介绍一下github的一些使用。
 ## github安装 ##
 github提供了桌面客户端，我们也可以通过命令行的方式来进行控制。

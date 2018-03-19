@@ -1,3 +1,12 @@
+---
+title: "css样式表的引入方式"
+author: Neal
+description: "一般来说，css 有两种样式表的引入方式，在这里我记录一下，比较这两种引入方式的区别：<link rel="stylesheet" type="text/css" href="css文件">@import "css文件"
+显然第一种方式似乎是更常见的。事实上，使用这两种方式引入css文件的效果都是一致的，区别在于是html标记，而@import是css语法。标记有rel,type和href属性，可以"
+tags: [css,html]
+catefories: [web前端]
+date: "2015-10-06 16:11:46"
+---
 一般来说，css 有两种样式表的引入方式，在这里我记录一下，比较这两种引入方式的区别：
 
 ```

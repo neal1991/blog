@@ -1,3 +1,15 @@
+---
+title: "javascript的继承模式"
+author: Neal
+description: "在javascript里面看到javascript的继承模式和传统的继承模式是有区别的，就想查资料看一下到底有区别，就看到了这篇文章，觉得讲得还可以，暂时先放上来，以后有别的东西再补充： 
+http://segmentfault.com/a/1190000000766541基本模式var Parent = function(){
+    this.name = 'parent';
+｝;
+Parent"
+tags: [javascript,继承]
+catefories: [web前端]
+date: "2015-10-24 14:03:33"
+---
 在javascript里面看到javascript的继承模式和传统的继承模式是有区别的，就想查资料看一下到底有区别，就看到了这篇文章，觉得讲得还可以，暂时先放上来，以后有别的东西再补充：
 http://segmentfault.com/a/1190000000766541
 ## 基本模式 ##

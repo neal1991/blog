@@ -1,3 +1,11 @@
+---
+title: "道路识别demo"
+author: Neal
+description: "最近做的道路识别一开始终于弄懂了点东西，一开始在网上找到了一个简单的道路识别的opencvsharp的版本。我觉得opencvsharp真的是一个很好的东西，它封装了比opencv更多的数据结构和库，而且得益于.net平台的强大，使用起来也非常的便捷。唯一的缺点就是目前关于这方面的资料还是少之又少，后来我还是想一想把这个demo转换成cpp版本，也是一个非常简单的demo。opencvsharp版本"
+tags: [opencv,道路识别,lane]
+catefories: [计算机视觉]
+date: "2015-04-15 09:55:48"
+---
 最近做的道路识别一开始终于弄懂了点东西，一开始在网上找到了一个简单的道路识别的opencvsharp的版本。我觉得opencvsharp真的是一个很好的东西，它封装了比opencv更多的数据结构和库，而且得益于.net平台的强大，使用起来也非常的便捷。唯一的缺点就是目前关于这方面的资料还是少之又少，后来我还是想一想把这个demo转换成cpp版本，也是一个非常简单的demo。
 ## opencvsharp版本 ##
 

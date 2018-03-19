@@ -1,3 +1,17 @@
+---
+title: "使用js实现图片轮滑效果"
+author: Neal
+description: "经常在购物网站，看到那种图片轮滑的效果，所以看到有人实现了，所以我也就学习下了。 
+首先贴出html代码：<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>document</title>
+    <link rel="stylesheet" type="text/css" href="styl"
+tags: [html]
+catefories: [web前端]
+date: "2015-10-21 19:57:40"
+---
 经常在购物网站，看到那种图片轮滑的效果，所以看到有人实现了，所以我也就学习下了。
 首先贴出html代码：
 

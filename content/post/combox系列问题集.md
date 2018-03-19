@@ -1,3 +1,14 @@
+---
+title: "combox系列问题集"
+author: Neal
+description: "你有没有遇到combox经常崩溃的情况，你是不是很莫名其妙，你是不是很想知道为什么，你是不是很无语，你是不是很纠结？ 
+你知道是为什么吗？ 
+因为你用了有道截屏翻译！！！！！！！！！！！！！！！！ 
+太坑爹了！！"
+tags: [vs,combox]
+catefories: [开发工具]
+date: "2015-04-14 09:04:09"
+---
 
 
 visual studio崩溃

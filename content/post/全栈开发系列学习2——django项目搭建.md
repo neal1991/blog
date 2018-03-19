@@ -1,3 +1,16 @@
+---
+title: "全栈开发系列学习2——django项目搭建"
+author: Neal
+description: "项目代码：http://yunpan.cn/cHajgT4HvgHqx （提取码：8350） 
+配置项目： 
+1. 首先确保你的机器安装了python和pip，这两种安装比较简单，这里就不说了。 
+2. 在你的机器上安装mysql服务，这个也不细说了。然后安装Mysql-python,只要输入命令”pip install MySQL-python”就可以了。 
+3. 解压项目文件代码。 
+4. 进入"
+tags: [django,python]
+catefories: [web前端]
+date: "2015-10-10 11:16:11"
+---
 项目代码：http://yunpan.cn/cHajgT4HvgHqx （提取码：8350）
 配置项目：
 1. 首先确保你的机器安装了python和pip，这两种安装比较简单，这里就不说了。

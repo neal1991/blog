@@ -1,3 +1,15 @@
+---
+title: "differential evolution代码实例（DE算法）"
+author: Neal
+description: "DE算法是遗传算法中一种比较流行的算法，这种算法比较简单，速度也比较快，下面给出一份示例代码clear all; close all; clc
+ 2 %Function to be minimized
+ 3 D=2;
+ 4 objf=inline(’4*x1^2é2.1*x1^4+(x1^6)/3+x1*x2é4*x2^2+4*x2^4’,’x1’,’x2’);
+ 5 objf=vectorize("
+tags: [算法]
+catefories: [机器学习]
+date: "2015-10-26 08:44:06"
+---
 DE算法是遗传算法中一种比较流行的算法，这种算法比较简单，速度也比较快，下面给出一份示例代码
 
 ```

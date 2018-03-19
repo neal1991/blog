@@ -1,3 +1,15 @@
+---
+title: "如何将网络流转化为内存流 C#"
+author: Neal
+description: "//将获取的文件流转化为内存流
+        public static MemoryStream ConvertStreamToMemoryStream(Stream stream)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            if (stream != null)"
+tags: [c#]
+catefories: [winform开发]
+date: "2015-04-28 11:45:14"
+---
 ```
         //将获取的文件流转化为内存流
         public static MemoryStream ConvertStreamToMemoryStream(Stream stream)
