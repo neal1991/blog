@@ -17,7 +17,7 @@ git push origin master
 hugo -t hugo-nuo # if using a theme, replace by `hugo -t <yourtheme>`
 
 # Go To Public folder
-cd public
+cd public/
 # Add changes to git.
 git add -A
 
@@ -27,6 +27,7 @@ git commit -m "$msg"
 
 # Push source and build repos.
 git pull origin master
+git push origin master
 cd ../../neal1991.github.io/
 git pull
 git push all master
