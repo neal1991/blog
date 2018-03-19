@@ -3,11 +3,7 @@ title: "latex算法步骤如何去掉序号"
 author: Neal
 description: "想去掉latex算法步骤前面的序号，如下 
  
-我想去掉每个算法步骤前面的数字序号，1，2，3，因为我已经写了step。我们只需要引用a lgorithmic这个包就可以了，代码如下：\begin{algorithm}[htb]
-\caption{SDE}
-\label{alg2}
-\begin{algorithmic}
-\STATE Step 1. Compute the covariance m"
+我想去掉每个算法步骤前面的数字序号，1，2，3，因为我已经写了step。我们只需要引用 algorithmic 这个包就可以了，"
 tags: [latex]
 catefories: [论文写作]
 date: "2015-11-06 19:03:15"

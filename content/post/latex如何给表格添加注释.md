@@ -2,10 +2,10 @@
 title: "latex如何给表格添加注释"
 author: Neal
 description: "在latex中，想给表格添加注释，可以使用threeparttable这个包 
-代码如下：\usepackage{threeparttable}
-\begin{table*}
-\begin{threeparttable}
-\centering \caption{Statistical results of the IGD values of the final populations obtaine"
+代码如下：\\usepackage{threeparttable}
+\\begin{table*}
+\\begin{threeparttable}
+\\centering \\caption{Statistical results of the IGD values of the final populations obtaine"
 tags: [latex]
 catefories: [论文写作]
 date: "2015-12-10 15:41:52"
