@@ -12,6 +12,10 @@ git commit -m "$msg"
 git pull origin master
 git push origin master
 
+cd themes/hugo-nuo
+git pull origin master
+cd ../../
+
 
 # Build the project. 
 hugo -t hugo-nuo # if using a theme, replace by `hugo -t <yourtheme>`
