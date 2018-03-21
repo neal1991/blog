@@ -92,10 +92,32 @@ export default function asyncInfoCard (importComp) {
       this.setState({
         component: component
       })
-  }
+    ｝
+  }
 }
 ```
 
-这样我们就实现了将同步组件改造成一个异步加载的组件
+这样我们就实现了将同步组件改造成一个异步加载的组件，这样就无需一下子加载所有的组件。这样我们就可以在 Map 中使用异步的方式来进行组件的加载：
 
+```javascript
+import asyncInfoCard from './InfoCard'
+const InfoCard = asyncInfoCard(() => import('./InfoCard')
+```
 
+通过上线之后的性能分析，lighthouse 性能评分一下子就上升到了 80 多分，证明这样的改进还是比较有效的。另外一个值得提的点就是首屏，因为历史原因，整张图 svg 中元素的位置都是定死的，及横坐标和纵坐标都已经是定义好的，而 svg 被定为在中间。在移动端加载时，呈现的就是左边的空白区域，所以给用户一种程序未加载完毕的错觉。之前的版本的做法就是通过 scroll 来实现滚动条的滚动，将视图的焦点移动到中间位置。这次的想法是通过 `transform` 来实现：
+
+```css
+.svg {
+transform: translate(-100px, -300px)
+}
+```
+
+这样实现了整个 svg 图位置的偏移，使用 lighthouse 进行分析，性能分降到了 70 多分。继续想想有没有其他的方法，后来我想在最左上上角定义一个箭头动画。
+
+```html
+<img src="right_arrow.png" alt="right arrow" title="right arrow" class="right-arrow"/>
+```
+
+```css 
+.right-arrow {
+  transform: 
