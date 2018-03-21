@@ -51,4 +51,51 @@ const str = JSON.stringify(result);
 
 ![subway-react](https://user-images.githubusercontent.com/12164075/37656324-ace5c2b2-2c82-11e8-8b6a-b3c96e091c73.gif)
 
-InfoCard 是最为复杂的一个组件，因为里面包含了好几个 icon，以及状态信息的切换，同时需要实现切换不同的站点的时候能够更新信息提示窗。需要注意信息提示窗信息初次点击信息的初始化，以及切换不同 icon 时
+InfoCard 是最为复杂的一个组件，因为里面包含了好几个 icon，以及状态信息的切换，同时需要实现切换不同的站点的时候能够更新信息提示窗。需要注意信息提示窗信息初次点击信息的初始化，以及切换不同 icon 时分别显示不同的信息，比如卫生间信息或者出入口信息，以及对于时刻表，切换不同的线路的时候更新对应的时刻表。这些状态的转化，需要值得注意。另外值得一题的点就是，在切换不同站点的时候的状态，假如我正在看某个站点的卫生间信息的时候，我点击另外一个站点，这时候弹出的信息提示窗应该是时刻表信息还是卫生间信息呢？我的选择还是卫生间信息，我对于这一状态进行了保持，这样的用户体验从逻辑上来讲似乎更佳。具体实现的代码细节就不一一说明了，里面肯能包含更多的细节，欢迎使用体验。
+
+## 性能优化
+
+以上这些的开发得益于之前的维护，所以重构过程还是比较快的，稍微熟悉了下 react 的用法就完成了重构。但是，在上线之后使用 lighthouse 做分析，performan 的得分是 0 分。首屏渲染以及可交互得分都是 0 分，首先来分析一下。因为整个应用都是通过 js 来渲染，而最为核心的就是那个 svg。整个看下来，有几点值得注意：
+
+* 代码直接将 json 导入，导致 js 体积过大
+* 所有组件都在渲染的时候进行加载
+
+找到问题点，就可以想到一些解决方案了。第一个比较简单，压缩 json 数据，去除一些不需要的信息。第二个，好的解决办法就是通过异步加载来实现组件加载，效果明显，尤其是对于 InfoCard 组件：
+
+### 同步
+
+```javascript
+class InfoCard extends React.Component {
+  constructor(props) {
+    super(props) ｛
+    ...
+    ｝
+  ｝
+  ...
+}
+```
+
+### 异步
+
+```javascript
+export default function asyncInfoCard (importComp) {
+  class InfoCard extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        component: null
+      };
+    }
+    
+    asyncComponentDidMount() {
+      const { default: component } = await importComp();
+      this.setState({
+        component: component
+      })
+  }
+}
+```
+
+这样我们就实现了将同步组件改造成一个异步加载的组件
+
+
