@@ -161,7 +161,11 @@ transform: translate(-100px, -300px)
 青年问禅师：“请问大师，我写的程序为什么没有得到预期的输出？”
 禅师答到：“年轻人，那是因为你的程序只会按你怎么写的执行，不会按你怎么想的执行啊……”
 
-阅读原文，可以查看项目源代码地址，欢迎 star 或者 pr。
+[源代码地址](https://github.com/neal1991)，欢迎 star 或者 pr。
 
 以上
+
+欢迎搜索微信号 mad_coder 或者扫描二维码关注公众号：
+
+![93cfyj.jpg](https://user-gold-cdn.xitu.io/2018/2/10/1617eae1b59c001c?w=258&h=258&f=jpeg&s=27683)
 
