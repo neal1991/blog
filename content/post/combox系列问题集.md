@@ -6,7 +6,7 @@ description: "你有没有遇到combox经常崩溃的情况，你是不是很莫
 因为你用了有道截屏翻译！！！！！！！！！！！！！！！！ 
 太坑爹了！！"
 tags: [vs,combox]
-catefories: [开发工具]
+categories: [开发工具]
 date: "2015-04-14 09:04:09"
 ---
 

@@ -8,7 +8,7 @@ description: "项目代码：http://yunpan.cn/cHajgT4HvgHqx （提取码：8350�
 3. 解压项目文件代码。 
 4. 进入"
 tags: [django,python]
-catefories: [web前端]
+categories: [web前端]
 date: "2015-10-10 11:16:11"
 ---
 项目代码：http://yunpan.cn/cHajgT4HvgHqx （提取码：8350）

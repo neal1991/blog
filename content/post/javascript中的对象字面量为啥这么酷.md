@@ -9,7 +9,7 @@ description: "原文链接 : Why object literals in JavaScript are cool
 成对出现的名称以及相应的值{ name1: value1 }
 Getters {"
 tags: [javascript,对象]
-catefories: [web前端]
+categories: [web前端]
 date: "2016-07-26 22:37:18"
 ---
 >* 原文链接 : [Why object literals in JavaScript are cool](https://rainsoft.io/why-object-literals-in-javascript-are-cool/)

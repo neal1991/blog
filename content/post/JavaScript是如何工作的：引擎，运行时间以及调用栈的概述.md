@@ -4,7 +4,7 @@ author: Neal
 description: "How JavaScript works: an overview of the engine, the runtime, and the call stackJavaScript是如何工作的：引擎，运行时间以及回调的概述
   原文：How JavaScript works: an overview of the engine, the runtime, and the call stack"
 tags: [javascript]
-catefories: [web前端]
+categories: [web前端]
 date: "2017-09-13 21:04:31"
 ---
 # JavaScript是如何工作的：引擎，运行时以及调用栈的概述

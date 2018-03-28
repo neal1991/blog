@@ -8,7 +8,7 @@ I am cool
 you are right
 \\end{large}, yeah, y"
 tags: [latex]
-catefories: [论文写作]
+categories: [论文写作]
 date: "2017-01-06 22:09:53"
 ---
 在毕业论文的写作过程中，遇到了一个`\large` 作用域的问题。假设下面有三种写法：

@@ -3,7 +3,7 @@ title: "基于ELK进行邮箱访问日志的分析"
 author: Neal
 description: "公司希望能够搭建自己的日志分析系统。现在基于ELK的技术分析日志的公司越来越多，在此也记录一下我利用ELK搭建的日志分析系统。系统搭建系统主要是基于elasticsearch+logstash+filebeat+kibana+nginx，其实我这个用的还是比较多的，可以直接用logstash直接去采集日志。不过由于logstash的性能影响都比较大，而且filebeat安装很方便，而且占用资源很小，"
 tags: [elasticsearch,logstash,kibana,filebeat]
-catefories: [安全]
+categories: [安全]
 date: "2017-11-16 09:11:39"
 ---
 公司希望能够搭建自己的日志分析系统。现在基于ELK的技术分析日志的公司越来越多，在此也记录一下我利用ELK搭建的日志分析系统。

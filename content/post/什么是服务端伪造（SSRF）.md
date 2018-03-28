@@ -8,7 +8,7 @@ description: "什么是服务端伪造（SSRF）
   
   welcome to star my articles-translator , providing you advanced articles translation. Any suggestion, please issue or contact"
 tags: [信息安全]
-catefories: [安全]
+categories: [安全]
 date: "2017-08-06 21:44:24"
 ---
 # 什么是服务端伪造（SSRF）

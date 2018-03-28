@@ -11,7 +11,7 @@ description: "PCA算法算法步骤：
 6. Y=PX即为降维到k维后的数据实例  
 以这个为例，我们用PCA"
 tags: [pca]
-catefories: [机器学习]
+categories: [机器学习]
 date: "2015-06-20 09:11:39"
 ---
 ## PCA算法 ##

@@ -4,7 +4,7 @@ author: Neal
 description: "我们可能经常面临这样的困惑，Iplimage和Mat这两种数据结构，我们应该用哪一种数据结构。 
 Iplimage一开始就存在opencv库之中，他来源于Intel的另外一个函数库Intel Image Processing Library(IPL)，这是一种非常重要的数据结构。在经典书籍里面的sample用的基本都是Iplimage这个数据结构。但是这是一种C风格的数据结构，你必须为他分配以及释放"
 tags: [iplimage,opencv]
-catefories: [计算机视觉]
+categories: [计算机视觉]
 date: "2015-04-15 12:08:20"
 ---
 我们可能经常面临这样的困惑，Iplimage和Mat这两种数据结构，我们应该用哪一种数据结构。

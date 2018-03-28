@@ -3,7 +3,7 @@ title: "POI读取文件的最佳实践"
 author: Neal
 description: "POI是 Apache 旗下一款读写微软家文档声名显赫的类库。应该很多人在做报表的导出，或者创建 word 文档以及读取之类的都是用过 POI。POI 也的确对于这些操作带来很大的便利性。我最近做的一个工具就是读取计算机中的 word 以及 excel 文件。下面我就两方面讲解以下遇到的一些坑：word 篇对于 word 文件，我需要的就是提取文件中正文的文字。所以可以创建一个方法来读取 doc 或"
 tags: [apache,poi]
-catefories: [java开发]
+categories: [java开发]
 date: "2017-11-26 16:29:33"
 ---
 [POI](https://poi.apache.org/)是 Apache 旗下一款读写微软家文档声名显赫的类库。应该很多人在做报表的导出，或者创建 word 文档以及读取之类的都是用过 POI。POI 也的确对于这些操作带来很大的便利性。我最近做的一个工具就是读取计算机中的 word 以及 excel 文件。下面我就两方面讲解以下遇到的一些坑：

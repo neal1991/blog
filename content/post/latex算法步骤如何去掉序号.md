@@ -5,7 +5,7 @@ description: "想去掉latex算法步骤前面的序号，如下
  
 我想去掉每个算法步骤前面的数字序号，1，2，3，因为我已经写了step。我们只需要引用 algorithmic 这个包就可以了，"
 tags: [latex]
-catefories: [论文写作]
+categories: [论文写作]
 date: "2015-11-06 19:03:15"
 ---
 想去掉latex算法步骤前面的序号，如下

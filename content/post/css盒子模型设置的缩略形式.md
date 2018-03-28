@@ -8,7 +8,7 @@ padding-bottom:30px
 padding-left:10pxnew method:padding:0px 20px 30px 10px
 // top right bott"
 tags: [css]
-catefories: [web前端]
+categories: [web前端]
 date: "2015-10-24 10:48:23"
 ---
 css里面的盒子模型里面设置padding,margin的上下或者左右的大小有很多方式，下面说说两种不同的方式：

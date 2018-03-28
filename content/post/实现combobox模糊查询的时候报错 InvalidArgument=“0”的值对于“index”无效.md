@@ -4,7 +4,7 @@ author: Neal
 description: "因为要对combobox实现模糊查询，因为系统实现的匹配只能从左到右进行匹配，所以利用两个list来进行模糊匹配，主要代码如下：        List<string> listOnit = new List<string>(); //绑定原始数据源
         List<string> listNew = new List<string>();         private void com"
 tags: [combobox,winform]
-catefories: [winform开发]
+categories: [winform开发]
 date: "2015-05-02 17:51:23"
 ---
 因为要对combobox实现模糊查询，因为系统实现的匹配只能从左到右进行匹配，所以利用两个list来进行模糊匹配，主要代码如下：

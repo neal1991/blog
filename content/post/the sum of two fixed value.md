@@ -3,7 +3,7 @@ title: "the sum of two fixed value"
 author: Neal
 description: "the sum of two fixed valuedescriptionInput an array and an integer, fina a pair of number in the array so that the sum is equals to the inputed integer. If there are several pairs, you can output any p"
 tags: [算法]
-catefories: [算法OJ]
+categories: [算法OJ]
 date: "2016-10-26 17:34:25"
 ---
 the sum of two fixed value

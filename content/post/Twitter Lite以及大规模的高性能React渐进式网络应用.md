@@ -8,7 +8,7 @@ description: "Twitter Lite以及大规模的高性能React渐进式网络应用
   
   welcome to star my articles-translator , providing you advanced articl"
 tags: [twitter,高性能]
-catefories: [web前端]
+categories: [web前端]
 date: "2017-04-16 08:27:46"
 ---
 # Twitter Lite以及大规模的高性能React渐进式网络应用

@@ -8,7 +8,7 @@ description: "今天，看到github推送了一个新的消息，Publishing with
 激活Github pages
 现在github对于markdown文件真的支持的特别好，比csdn的markdown好多了。老实说，如果不是"
 tags: [github]
-catefories: [IT新闻]
+categories: [IT新闻]
 date: "2016-12-09 10:41:39"
 ---
 今天，看到github推送了一个新的消息，[Publishing with GitHub Pages, now as easy as 1, 2, 3](https://github.com/blog/2289-publishing-with-github-pages-now-as-easy-as-1-2-3)。总结起来就是在github将你的文档或者发布网页将会变得十分简单。

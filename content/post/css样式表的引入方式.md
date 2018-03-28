@@ -3,7 +3,7 @@ title: "css样式表的引入方式"
 author: Neal
 description: "一般来说，css 有两种样式表的引入方式，在这里我记录一下，比较这两种引入方式的区别："
 tags: [css,html]
-catefories: [web前端]
+categories: [web前端]
 date: "2015-10-06 16:11:46"
 ---
 一般来说，css 有两种样式表的引入方式，在这里我记录一下，比较这两种引入方式的区别：

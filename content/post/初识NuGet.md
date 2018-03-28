@@ -5,7 +5,7 @@ description: "因为想查一查opencvsharp的东西，然后发觉这个包可�
 NuGet是一个免费的并且开源的包管理器在微软的开发平台上。NuGet发布在Visual Studio的拓展插件上。 
 NuGet现在已经移植到代码管理平台github了，链接地址为https://github.com/nuget/home。"
 tags: [NuGet,visual,studio]
-catefories: [开发工具]
+categories: [开发工具]
 date: "2015-04-12 16:32:36"
 ---
 因为想查一查opencvsharp的东西，然后发觉这个包可以再NuGet上面可以直接下载。我也经常在很多地方都可以看到NuGet，所以我想写下来，记录下来。

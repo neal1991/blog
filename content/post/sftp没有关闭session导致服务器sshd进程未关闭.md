@@ -8,7 +8,7 @@ description: "项目中需要用Sftp上传下载文件，通过jsch中的sftp实
             JSch jsch = new JSch();
             jsch.getSession(userName, ho"
 tags: [服务器,sftp]
-catefories: [java开发]
+categories: [java开发]
 date: "2016-07-28 17:09:59"
 ---
 项目中需要用Sftp上传下载文件，通过jsch中的sftp实现。代码上了服务器之后，发觉服务器多了很多进程没有被关闭。

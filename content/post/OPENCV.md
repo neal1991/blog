@@ -4,7 +4,7 @@ author: Neal
 description: "转载 
 尽管之前写过一篇关于OpenCV的介绍（http://blog.csdn.net/carson2005/article/details/5822149），但依然有朋友对其不甚了解。所以，经常能碰到有人问我诸如以下一些问题：OpenCV能不能实现人脸识别？OpenCV有没有车辆检测的API？OpenCV有没有三维重建的函数？面对这样的问题，我也很困惑。到底该如何给他们解释，才能让它们明白，Op"
 tags: [opencv]
-catefories: [计算机视觉]
+categories: [计算机视觉]
 date: "2015-04-11 11:22:35"
 ---
 

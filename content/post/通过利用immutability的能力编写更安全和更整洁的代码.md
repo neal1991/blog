@@ -8,7 +8,7 @@ description: "通过利用immutability的能力编写更安全和更整洁的代
   
   welcome to star my articles-translator , providing you advanced article"
 tags: [javascript,react,immutable]
-catefories: [web前端]
+categories: [web前端]
 date: "2017-05-21 11:41:05"
 ---
 # 通过利用immutability的能力编写更安全和更整洁的代码

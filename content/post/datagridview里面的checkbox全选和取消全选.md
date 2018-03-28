@@ -6,7 +6,7 @@ description: "全选设置全选button，选中所有的checkbox        private 
         //遍历datagridview中的每一行，判断是否选中，若为选中，则选中
             for (int i = 0; i < dataGridView1.Rows.Cou"
 tags: [datagridview,winform]
-catefories: [winform开发]
+categories: [winform开发]
 date: "2015-04-22 10:25:19"
 ---
 ## 全选 ##

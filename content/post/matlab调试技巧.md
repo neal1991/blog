@@ -11,7 +11,7 @@ description: "Matlab的调试总体分为，直接调试和间接调试。
 （1）设置断点： 
 dbstop in mfile:在文件名为mfile的M文件第一个可执行"
 tags: [matlab]
-catefories: [matlab]
+categories: [matlab]
 date: "2015-10-13 18:49:10"
 ---
 Matlab的调试总体分为，直接调试和间接调试。

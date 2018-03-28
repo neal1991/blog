@@ -4,7 +4,7 @@ author: Neal
 description: "今天打包一个安装程序，总是出现报错，internal build error -6212，然后搜遍都没有找到什么解决方案。看到一个帖子，说是因为installsheild里面的build的时候自动扫描.NET依赖库造成的原因，要把这个自动扫描功能给关掉，但是他说的在什么地方关说的不是很清楚，所以我一直找不到。 
 http://1978l.blog.163.com/blog/static/449444"
 tags: [.net]
-catefories: [winform开发]
+categories: [winform开发]
 date: "2015-12-20 13:23:21"
 ---
 今天打包一个安装程序，总是出现报错，internal build error -6213，然后搜遍都没有找到什么解决方案。看到一个帖子，说是因为installsheild里面的build的时候自动扫描.NET依赖库造成的原因，要把这个自动扫描功能给关掉，但是他说的在什么地方关说的不是很清楚，所以我一直找不到。

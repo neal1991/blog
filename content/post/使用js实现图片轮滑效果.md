@@ -4,7 +4,7 @@ author: Neal
 description: "经常在购物网站，看到那种图片轮滑的效果，所以看到有人实现了，所以我也就学习下了。 
 首先贴出html代码"
 tags: [html]
-catefories: [web前端]
+categories: [web前端]
 date: "2015-10-21 19:57:40"
 ---
 经常在购物网站，看到那种图片轮滑的效果，所以看到有人实现了，所以我也就学习下了。
