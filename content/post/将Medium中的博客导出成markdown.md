@@ -7,9 +7,10 @@ tags: [markdown,博客,chrome插件]
 categories: [开发工具]
 date: "2017-09-23 16:33:06"
 ---
-Medium(https://medium.com)（需要翻墙访问）是国外非常知名的一个博客平台。上面经常有很多知名的技术大牛在上面发布博客，现在一般国内的搬运的技术文章大多数都是来自于这个平台。
-Medium文章格式显示地非常优雅，但是存在一个问题。众所周知，markdown已经是最受程序猿欢迎的文本编辑格式之一。但是Medium仅仅支持markdown格式导入，不支持markdown格式的导出。这也正是我当初开发这个插件[export-medium](https://github.com/neal1991/export-medium)的原因，现在这个项目是放在github上面的，欢迎大家多多star,或者pr。自己也花了5美金，注册了开发者账号，因为现在chrome对于不是商店的插件限制很严格，如果没上商店，一直有提醒，很麻烦。商店访问地址在[这](https://chrome.google.com/webstore/detail/dodkihcbgpjblncjahodbnlgkkflliim/publish-accepted?utm_source=chrome-ntp-icon&authuser=1),需要翻墙访问。不过你可以手动安装:
-* 将[export-medium](https://github.com/neal1991/export-medium) clone 或者下载到本地。
+[Medium](https://medium.com)（需要翻墙访问）是国外非常知名的一个博客平台。上面经常有很多知名的技术大牛在上面发布博客，现在一般国内的搬运的技术文章大多数都是来自于这个平台。
+
+Medium 文章格式显示地非常优雅，但是存在一个问题。众所周知，markdown已经是最受程序猿欢迎的文本编辑格式之一。但是Medium仅仅支持markdown格式导入，不支持markdown格式的导出。这也正是我当初开发这个插件[export-medium](https://github.com/neal1991/export-medium)的原因，现在这个项目是放在github上面的，欢迎大家多多star,或者pr。自己也花了5美金，注册了开发者账号，因为现在chrome对于不是商店的插件限制很严格，如果没上商店，一直有提醒，很麻烦。商店访问地址在[这](https://chrome.google.com/webstore/detail/dodkihcbgpjblncjahodbnlgkkflliim/publish-accepted?utm_source=chrome-ntp-icon&authuser=1),需要翻墙访问。不过你可以手动安装:
+* 将 [export-medium](https://github.com/neal1991/export-medium) clone 或者下载到本地。
 * 在 Chrome 浏览中打开`chrome://extensions`,加载已解压的拓展程序，选择项目文件夹
 
 ![这里写图片描述](http://img.blog.csdn.net/20170923163242479?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbmVhbDE5OTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
