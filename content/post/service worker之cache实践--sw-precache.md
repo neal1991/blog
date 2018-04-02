@@ -28,7 +28,7 @@ self.addEventListener('install', function(e) {
 });
 ```
 
-可以看出我们在install事件后通过在cache里面加载文件，所以我们必须选择一种合适的策略能够让我们的APP在代码更新之后去请求新的代码呢？
+可以看出我们在 install 事件后通过在 cache 里面加载文件，所以我们必须选择一种合适的策略能够让我们的APP在代码更新之后去请求新的代码呢？
 
 Google其实在PWA推出的过程中也给出了很多有用的技术。比如[sw-precache](https://github.com/GoogleChrome/sw-precache)以及[sw-toolbox](https://github.com/GoogleChrome/sw-toolbox)，以及最近正在发展过程中的[sw-helper](https://github.com/GoogleChrome/sw-helpers)。这里，我主要使用的是sw-precache来更新我的service worker策略。
 
