@@ -55,6 +55,28 @@ var a = setInterval(function() {
 
 这样就可以了，setInterval 在设置的时间间隔后都会去执行，如果我们不使用 `clearInterval()` 方法的话，那么函数就会一直执行。
 
+那还有没有其它的方法呢，比如 promise?
+
+```javascript
+fn = (i) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(i);
+    }, i * 1000)
+  })
+}
+
+Fn = async () => {
+  for (let i = 0; i < 5; i++) {
+    const res = await fn(i);
+    console.log(res);
+  }
+}
+Fn()
+```
+
+这样我们通过 promise 可以实现“同步”地逐个打印的效果。
+
 以上就是对于这个面试题的解答，以及介绍了一下 setTimeout 和 setInterval 的区别，如果大家还有更好的解决思路的话，欢迎留言。
 
 以上。
