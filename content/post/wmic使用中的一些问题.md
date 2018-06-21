@@ -16,3 +16,7 @@ Wmic, 即 Windows Management Instrumentation Command-Line Utility，通过这个
 ## 程序和功能
 
 通过 `wmic product` 我们可以获取程序和功能的安装信息。
+
+`wmic product get name,description`
+
+这样我们就可以获取计算机上安装的程序和功能列表以及其相应的描述。
