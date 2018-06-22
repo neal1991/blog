@@ -28,3 +28,11 @@ Wmic, 即 Windows Management Instrumentation Command-Line Utility，通过这个
 通过 `wmic` 只能获取大部分程序列表，它们的安装包一般都是使用 Windows Installer 制作的，安装过程中调用 Windows Installer 服务进行安装。但是 Windows Installer 并不是唯一的制作安装包的工具，因此 `wmic` 往往可能获取的还不是完整的程序和功能列表。至于完整的程序和功能列表，可以参考[这篇文章](http://www.4hou.com/technology/10206.html)。
 
 ## 补丁信息
+
+经常我们需要获取计算机的补丁安装情况。通过 `systeminfo` 可以获取一部分补丁安装信息，但是信息一般比较少。在这里，我们依然可以通过使用 `wmic` 来获取补丁安装信息。
+
+`wmic qfe list full`
+
+这样我们就可以获取补丁的安装的相关信息了，但是这样的结果可能看起来不是很直观，所以我们还可以进行相应的格式化。`wmic qfe list full /format:table`，这样就可以把结果以表格的形式展现出来。加入我们还希望将结果导出来，我们可以将其导出比较好看的 html 表格形式：`wmic qfe list full /fomrmat:htble > qfe.html`。
+
+如果不希望在结果中显示所有的字段，可以使用 `wmic qfe list brief` 或者 使用 `wmic qfe get hotfixid,installedon` 获取希望展示的字段。还可以使用其他的字段，比如 `description`, `installedby` 等等。
