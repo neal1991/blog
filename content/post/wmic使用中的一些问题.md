@@ -36,3 +36,17 @@ Wmic, 即 Windows Management Instrumentation Command-Line Utility，通过这个
 这样我们就可以获取补丁的安装的相关信息了，但是这样的结果可能看起来不是很直观，所以我们还可以进行相应的格式化。`wmic qfe list full /format:table`，这样就可以把结果以表格的形式展现出来。加入我们还希望将结果导出来，我们可以将其导出比较好看的 html 表格形式：`wmic qfe list full /fomrmat:htble > qfe.html`。
 
 如果不希望在结果中显示所有的字段，可以使用 `wmic qfe list brief` 或者 使用 `wmic qfe get hotfixid,installedon` 获取希望展示的字段。还可以使用其他的字段，比如 `description`, `installedby` 等等。
+
+这样获取的是完整的补丁列表，如果仅仅希望获取2018年的补丁安装信息该怎么做呢？ Wmic 还支持 `where` 关键词来查询：
+
+`wmic qfe where "installedon like '%/%/2018'" list brief`
+
+这样就可以获取2018年内安装的补丁信息列表。但是很奇怪的一件事情就是这句话在命令行中执行是没有什么问题的，但是在 bat 脚本中执行这句话的时候，总是提示 `No Instance(s) Available.`。一开始我一直以为是 `where` 关键词有问题或者是 `wmic` 的问题。尝试使用：
+
+`wmic path win32_quickfixengineering where (installedon like "%/%/2018") list bief`
+
+同样地，这句话在命令中可以执行，但是在 bat 脚本中还是同样的问题。另外也排除了 `where` 关键词影响的可能性。最后才发现问题在于 `%` 上，因为在 bat 脚本中，% 有多种用途，在这里如果我们希望表示原始的 %，那么我们应该使用 %% 来表达，因此：
+
+`wmic qfe where "installedon like '%%/%%/2018'" list brief`
+
+
