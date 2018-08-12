@@ -1,5 +1,5 @@
 ---
-title: "利用 canvas 加载代码"
+title: "黑产代码解密--利用canvas加载代码"
 author: Neal
 description: ""
 tags: [canvas,前端开发,安全]
