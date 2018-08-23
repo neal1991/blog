@@ -112,5 +112,5 @@ There only 11111111111 people use the same phone as you
 There only 12345678912 people use the same phone as you
 There only 111111 people use the same phone as you
 
-哈哈，常规套路，我的 writeup 也是站在巨人的肩膀上完成的。
+哈哈，常规套路，这个 wp 除了浏览器没有使用任何第三方工具即可完成，是不是很方便。不过我的 writeup 也是站在巨人的肩膀上完成的。
 
