@@ -60,6 +60,16 @@ tpl.save('test_files/inline_image.docx')
 
 同样还可以使用宽度高度单位来设置图片的大小。另外我们还可以利用表格的模板来动态设置数据，具体可以参考 [test](https://github.com/elapouya/python-docx-template/tree/master/tests)，里面有各种例子可以参考。
 
-## Matplotlin
+## Matplotlib
 
-Matplotlib 是一个非常好的可视化作图工具，可以利用它制作各种图例。
+Matplotlib 是一个非常好的可视化作图工具，可以利用它制作各种图例。主要讲plt.几个使用的时候遇到的一些小问题。第一个就是图例上的中文乱码，需要设置图例的文字字体：
+
+```python
+plt.rcParams["font.sans.serif"] = ["SimHei"]
+```
+
+第二个情况就是图例中的 label 很有可能重叠，所以可以将 label 旋转：
+
+```python
+plt.xtick(obj["group_labels"], rotation=60)
+```
