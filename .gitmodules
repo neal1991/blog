@@ -4,3 +4,6 @@
 [submodule "themes/hugo-nuo"]
 	path = themes/hugo-nuo
 	url = https://github.com/neal1991/hugo-nuo.git
+[submodule "neal1991.github.io"]
+	path = neal1991.github.io
+	url = https://github.com/neal1991/neal1991.github.io
