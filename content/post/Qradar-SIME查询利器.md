@@ -55,7 +55,16 @@ GROUP BY sourceip,EventName
 
 IBM 与日期相关的函数主要就是4个，即 `LAST, START, STOP, NOW`。日期实现的逻辑太单一了，你只能指定具体的起始时间以及终止时间或者是 `LAST 1 DAYS` 这种。但是有一个非常普遍的场景就是我需要知道当前月份的情况，这就无法通过这几个关键词直接来实现，因为 `Current Month IS NOT LAST 30 DAYS`.那么我们需要介绍一个函数 `DATEFORMAT`,通过这个函数我们可以将时间转化为字符串类型，结合 `NOW` 以及 `START, STOP` 函数，既可以实现。
 
-```flow
-st=>start: 使用 NOW 获取当前时间
-op1=>opration: 将获取的时间
+![i612ng.png](https://s1.ax1x.com/2018/10/26/i612ng.png)
+
+那么我么就可以写出函数：
+
 ```
+CONCAT(SUBSTRING(DATEFORMAT(NOW(), 'yyyy-MM-dd'), 0, 8), 01 00:00)
+```
+
+将这个时间作为起始时间，那么我们就可以获取当前月的事件了。其实，按照这种思路，理论上你可以获取任意时间间隔。
+
+## 总结
+
+以上，即是我在使用 AQL 过程中一点小小的经验。虽然 AQL 槽点满满，但总的来说对于大数据的分析的确提供了不少便利，尤其是通过 Pulse 我们可以实现比 DashBoard 优美并且灵活的可视化 DashBoard。建议在使用过程中可以多看看[官方的文档](https://www.ibm.com/support/knowledgecenter/SS42VS_7.3.1/com.ibm.qradar.doc/c_aql_intro.html),以上很多解决方案在官方文档也都有提及。
