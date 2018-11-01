@@ -1,8 +1,4 @@
-
-
-
-
----
+  ---
 title: "GShark-监测你的 Github 敏感信息泄露"
 author: Neal
 description: ""
@@ -40,3 +36,30 @@ date: "2018-10-31"
 
 这三种引用方式我都有使用过，也在这3个里面切换了好几次，最终选择最后一个，这也是最标准的实现方式。第一种方式其实没啥大问题我觉得，只是我在使用 Travis 的时候，它无法识别。第二种方式可能没有第一种那样的问题，但是用起来比较麻烦，而且容易出错。第三种也是大多数 golang 项目使用的方式，这样别人也可以很方便地引入你的项目。
 
+Gshark 实现了一套比较粗糙的权限管理，主要是基于 [casbin](https://github.com/casbin/casbin) 来实现的。GShark 使用的 go-macaron 可以支持使用中间件 [authz](https://github.com/go-macaron/authz) 来实现权限管理，其实它的实现方式也是比较粗糙的，核心代码其实就是下面的一个函数：
+
+```go
+func Authorizer(e *casbin.Enforcer) macaron.Handler {
+	return func(res http.ResponseWriter, req *http.Request, c *macaron.Context) {
+		user, _, _ := req.BasicAuth()
+		method := req.Method
+		path := req.URL.Path
+		if !e.Enforce(user, path, method) {
+			accessDenied(res)
+			return
+		}
+	}
+}
+```
+
+可以看到必须要通过 BasicAuth 来进行认证的，从而获取用户的角色，来实现权限的控制。因为 GShark 没有使用 BasicAuth 来进行认证，所以角色的传递也是一个比较头疼的问题，其实还是使用标准的认证方式比较好，目前因为没有做到，只能通过 cookie 来进行传递，这种方式因此是不太可靠的。
+
+## 总结和展望
+
+其实这个项目从开始到现在也有大半年的时间，但因为一直都是我一个人维护和使用，所以也都是一直修修补补，在细节方面做更多的改善。虽然，目前这个项目还是不算特别成熟，但还是想把这个项目开源出来正式的维护，并且介绍给更多的开发者，并吸收更多的建议和意见。所以任何建议都是欢迎的，欢迎 issue 以及 PR。
+
+当然了，对于这个项目也有一些更多的期许：
+
+* 完善权限管理
+* 实现标准的用户认证，比如 OAuth2
+* 更准确地识别结果，或许可以结合机器学习，但目前还是没有思路
