@@ -54,11 +54,70 @@ func Authorizer(e *casbin.Enforcer) macaron.Handler {
 
 可以看到必须要通过 BasicAuth 来进行认证的，从而获取用户的角色，来实现权限的控制。因为 GShark 没有使用 BasicAuth 来进行认证，所以角色的传递也是一个比较头疼的问题，其实还是使用标准的认证方式比较好，目前因为没有做到，只能通过 cookie 来进行传递，这种方式因此是不太可靠的。
 
+## 项目部署
+
+目前这个项目我部署在我腾讯云的小水管上面，运行没啥问题，因为本来这个应用就不会占用特别多的资源。只不过最近 Github 好像越来越严格，我有一段时间 VPS 访问 Github 一直不成功，而且要注意限制爬取的频率，防止触发 Github 滥用告警。项目部署之前就是项目的安装，其实主要就是依赖包的安装。得益于 golang 的跨平台性，因此这个应用是可以运行在各个平台的。`main.go` 是启动文件：
+
+```
+go build main.go
+```
+
+Build 之后就会生成平台对应的可执行文件。项目的运行可以通过 CLI 来实现：
+
+```
+NAME:
+   GShark - Scan for sensitive information in Github easily and effectively.
+
+USAGE:
+   main [global options] command [command options] [arguments...]
+
+AUTHOR:
+   neal <bing.ecnu@gmail.com>
+
+COMMANDS:
+     web      Startup a web Service
+     scan     Start to scan github leak info
+     help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --debug, -d             Debug Mode
+   --host value, -H value  web listen address (default: "0.0.0.0")
+   --port value, -p value  web listen port (default: 8000)
+   --time value, -t value  scan interval(second) (default: 900)
+   --help, -h              show help
+   --version, -v           print the version
+```
+
+项目的运行的时候会初始化一些应用和规则配置，你需要将项目中的 app-template.ini 重命名成 app.ini:
+
+```
+HTTP_HOST = 127.0.0.1
+HTTP_PORT = 8000
+MAX_INDEXERS = 2
+DEBUG_MODE = true
+REPO_PATH = repos
+MAX_Concurrency_REPOS = 5
+
+[database]
+;support sqlite3, mysql, postgres
+DB_TYPE = sqlite
+HOST = 127.0.0.1
+PORT = 3306
+NAME = misec
+USER = root
+PASSWD = 
+SSL_MODE = disable
+;the path to store the database file of sqlite3
+PATH = 
+```
+
+其实里面主要就是服务以及数据库方面信息的配置。值得注意的一点是，如果你希望你的服务能够被外部访问，那么你应该将 HTTP_HOST 设置为 0.0.0.0。我使用的是 sqlite3 数据库，感觉使用起来已经比较方便了，而且对于小型 VPS 来说也是比较合适的。对于 scan 运行的时间间隔我建议可以设置大一点，可以让这个服务一直运行，也可以让它一直跑着。但老实说，一般短时间内，获取的结果也是比较有限的。
+
 ## 总结和展望
 
 其实这个项目从开始到现在也有大半年的时间，但因为一直都是我一个人维护和使用，所以也都是一直修修补补，在细节方面做更多的改善。虽然，目前这个项目还是不算特别成熟，但还是想把这个项目开源出来正式的维护，并且介绍给更多的开发者，并吸收更多的建议和意见。所以任何建议都是欢迎的，欢迎 issue 以及 PR。
 
-当然了，对于这个项目也有一些更多的期许：
+当然了，对于这个项目也有一些更多的期许，以后可能有更多的坑需要填补：
 
 * 完善权限管理
 * 实现标准的用户认证，比如 OAuth2
