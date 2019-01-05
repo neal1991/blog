@@ -10,7 +10,7 @@ date: "2019-04-22"
 
 ## Introduction
 
-Target: 10.10.10.121(Linux)
+Target: 10.10.10.121(OS: Linux)
 
 Kali: 10.10.16.28
 
