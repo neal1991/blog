@@ -17,6 +17,12 @@ date: "2019-01-14"
 基于此特性，并结合 IIS 对于请求路径中包含通配符不同的响应的特性，IIS 对于存在的短文件名的响应码为 404，对不存在的短文件名的响应码是 400.根据这个特点，可以暴力破解出 IIS 中存在的短文件名。关于短文件漏洞， Soroush Dalili 在 2012 年就有[论文](https://soroush.secproject.com/downloadable/microsoft_iis_tilde_character_vulnerability_feature.pdf)是关于这方面的研究。里面详细阐述了 IIS 短文件名的漏洞利用原理。
 
 
+## 漏洞修复
+
+关于该漏洞的修复，一般的修复就是停止创建短文件名，可以通过修改注册表来实现：
+
+
+
 
 
 ## Reference
