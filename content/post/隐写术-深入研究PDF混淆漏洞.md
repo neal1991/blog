@@ -1,4 +1,10 @@
-## "隐写术" - 深入研究 PDF混淆漏洞
+---
+title: ""隐写术" - 深入研究 PDF混淆漏洞"
+author: Neal
+tags: [安全,漏洞，翻译]
+categories: [安全]
+date: "2019-01-28" 
+---
 
 >原文：["steganography" - obfuscating PDF exploits in depth](https://blog.edgespot.io/2019/01/steganography-obfuscating-exploits.html)
 >
