@@ -1,5 +1,5 @@
 ---
-title: "\"隐写术\" \- 深入研究 PDF混淆漏洞"
+title: "隐写术-深入研究 PDF 混淆漏洞"
 author: Neal
 tags: [安全,漏洞，翻译]
 categories: [安全]
