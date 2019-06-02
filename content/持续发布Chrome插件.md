@@ -14,5 +14,14 @@ CircleCI 是一款持续集成产品，和 Travis 非常类似，都属于 Githu
 
 ## Google API
 
-首先，创建一个 Google API 项目，可以直接点击这个链接创建。
+首先，创建一个 Google API 项目，可以直接点击[这个链接](https://console.developers.google.com/projectcreate?organizationId=0)创建。
+
+![VG6DzV.png](https://s2.ax1x.com/2019/06/02/VG6DzV.png)
+
+在创建项目之后，我们需要开启 "Chrome Web Store API"。在 Library 中搜索这个 API， 并且将其 ENABLE。
+
+![VGW99s.png](https://s2.ax1x.com/2019/06/02/VGW99s.png)
+
+在 ENABLE 这个 API 之后，就可以点击 "CREATE CREDENTIALS" 创建口令了。
+![VGWwvt.png](https://s2.ax1x.com/2019/06/02/VGWwvt.png)
 
