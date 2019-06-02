@@ -10,4 +10,9 @@ Chrome 插件对于 Chrome 浏览器用户来说是必不可少的利器之一�
 
 ## 介绍
 
-CircleCI 是一款持续集成产品，和 Travis 非常类似，都属于 Github 上非常流行的持续集成产品。产品有商业和普通版本，开源项目是可以免费使用的。关于持续集成产品的不同，可以参考[这篇文章](https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5)。使用这个工具持续发布 Chrome 插件的原理就是：通过 CircleCI 来使用 Chrome 插件的 API 来持续发布插件，通过 CirecleCI 和 github 的集成可以在特定的时机就可以发布插件。
+CircleCI 是一款持续集成产品，和 Travis 非常类似，都属于 Github 上非常流行的持续集成产品。产品有商业和普通版本，开源项目是可以免费使用的。关于持续集成产品的不同，可以参考[这篇文章](https://hackernoon.com/continuous-integration-circleci-vs-travis-ci-vs-jenkins-41a1c2bd95f5)。使用这个工具持续发布 Chrome 插件的原理就是：通过 CircleCI 来使用 Chrome 插件的 API 来持续发布插件，通过 CirecleCI 和 github 的集成可以在特定的时机就可以发布插件。那么下面具体介绍如何使用 CircleCI 来进行 Chrome 插件的发布，主要包括 Google API 的配置以及 CirecleCI 的配置。
+
+## Google API
+
+首先，创建一个 Google API 项目，可以直接点击这个链接创建。
+
