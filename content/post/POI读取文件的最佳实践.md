@@ -1,0 +1,292 @@
+---
+title: "POI读取文件的最佳实践"
+author: Neal
+description: "POI是 Apache 旗下一款读写微软家文档声名显赫的类库。应该很多人在做报表的导出，或者创建 word 文档以及读取之类的都是用过 POI。POI 也的确对于这些操作带来很大的便利性。我最近做的一个工具就是读取计算机中的 word 以及 excel 文件。下面我就两方面讲解以下遇到的一些坑：word 篇对于 word 文件，我需要的就是提取文件中正文的文字。所以可以创建一个方法来读取 doc 或"
+tags: [apache,poi]
+categories: [java开发]
+date: "2017-11-26 16:29:33"
+---
+[POI](https://poi.apache.org/)是 Apache 旗下一款读写微软家文档声名显赫的类库。应该很多人在做报表的导出，或者创建 word 文档以及读取之类的都是用过 POI。POI 也的确对于这些操作带来很大的便利性。我最近做的一个工具就是读取计算机中的 word 以及 excel 文件。下面我就两方面讲解以下遇到的一些坑：
+
+## word 篇
+对于 word 文件，我需要的就是提取文件中正文的文字。所以可以创建一个方法来读取 doc 或者 docx 文件：
+```
+    private static String readDoc(String filePath, InputStream is) {
+        String text= "";
+        try {
+            if (filePath.endsWith("doc")) {
+                WordExtractor ex = new WordExtractor(is);
+                text = ex.getText();
+                ex.close();
+                is.close();
+            } else if(filePath.endsWith("docx")) {
+                XWPFDocument doc = new XWPFDocument(is);
+                XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
+                text = extractor.getText();
+                extractor.close();
+                is.close();
+            }
+        } catch (Exception e) {
+            logger.error(filePath, e);
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+        return text;
+    }
+```
+
+理论上来说，这段代码应该对于读取大多数 doc 或者 docx 文件都是有效的。但是!!!!我发现了一个奇怪的问题，就是我的代码在读取某些 doc 文件的时候，经常会给出这样的一个异常：
+
+```
+org.apache.poi.poifs.filesystem.OfficeXmlFileException: The supplied data appears to be in the Office 2007+ XML. You are calling the part of POI that deals with OLE2 Office Documents.
+```
+这个异常的意思是什么呢，通俗的来讲，就是你打开的文件并不是一个 doc 文件，你应该使用读取 docx 的方法去读取。但是我们明明打开的就是一个后缀是 doc 的文件啊！
+
+其实 doc 和 docx 的本质不同的，doc 是 OLE2 类型，而 docx 而是 OOXML 类型。如果你用压缩文件打开一个 docx 文件，你会发现一些文件夹：
+![这里写图片描述](http://img.blog.csdn.net/20171126163057697?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbmVhbDE5OTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+本质上 docx 文件就是一个 zip 文件，里面包含了一些 xml 文件。所以，一些 docx 文件虽然大小不大，但是其内部的 xml 文件确实比较大的，这也是为什么在读取某些看起来不是很大的 docx 文件的时候却耗费了大量的内存。
+
+然后我使用压缩文件打开这个 doc 文件，果不其然，其内部正是如上图，所以本质上我们可以认为它是一个 docx 文件。可能是因为它是以某种兼容模式保存从而导致如此坑爹的问题。所以，现在我们根据后缀名来判断一个文件是 doc 或者 docx 就是不可靠的了。
+
+老实说，我觉得这应该不是一个很少见的问题。但是我在谷歌上并没有找到任何关于此的信息。[how to know whether a file is .docx or .doc format from Apache POI](https://stackoverflow.com/questions/41711627/how-to-know-whether-a-file-is-docx-or-doc-format-from-apache-poi) 这个例子是通过 ZipInputStream 来判断文件是否是 docx 文件：
+
+```
+boolean isZip = new ZipInputStream( fileStream ).getNextEntry() != null;
+```
+
+但我并不觉得这是一个很好的方法，因为我得去构建一个ZipInpuStream，这很显然不好。另外，这个操作貌似会影响到 InputStream，所以你在读取正常的 doc 文件会有问题。或者你使用 File 对象去判断是否是一个 zip 文件。但这也不是一个好方法，因为我还需要在压缩文件中读取 doc 或者 docx 文件，所以我的输入必须是 Inputstream，所以这个选项也是不可以的。 我在 stackoverflow 上和一帮老外扯了大半天，有时候我真的很怀疑这帮老外的理解能力，不过最终还是有一个大佬给出了一个让我欣喜若狂的解决方案，[FileMagic](https://poi.apache.org/apidocs/org/apache/poi/poifs/filesystem/FileMagic.html)。这个是一个 POI 3.17新增加的一个特性：
+
+```
+public enum FileMagic {
+    /** OLE2 / BIFF8+ stream used for Office 97 and higher documents */
+    OLE2(HeaderBlockConstants._signature),
+    /** OOXML / ZIP stream */
+    OOXML(OOXML_FILE_HEADER),
+    /** XML file */
+    XML(RAW_XML_FILE_HEADER),
+    /** BIFF2 raw stream - for Excel 2 */
+    BIFF2(new byte[]{
+            0x09, 0x00, // sid=0x0009
+            0x04, 0x00, // size=0x0004
+            0x00, 0x00, // unused
+            0x70, 0x00  // 0x70 = multiple values
+    }),
+    /** BIFF3 raw stream - for Excel 3 */
+    BIFF3(new byte[]{
+            0x09, 0x02, // sid=0x0209
+            0x06, 0x00, // size=0x0006
+            0x00, 0x00, // unused
+            0x70, 0x00  // 0x70 = multiple values
+    }),
+    /** BIFF4 raw stream - for Excel 4 */
+    BIFF4(new byte[]{
+            0x09, 0x04, // sid=0x0409
+            0x06, 0x00, // size=0x0006
+            0x00, 0x00, // unused
+            0x70, 0x00  // 0x70 = multiple values
+    },new byte[]{
+            0x09, 0x04, // sid=0x0409
+            0x06, 0x00, // size=0x0006
+            0x00, 0x00, // unused
+            0x00, 0x01
+    }),
+    /** Old MS Write raw stream */
+    MSWRITE(
+            new byte[]{0x31, (byte)0xbe, 0x00, 0x00 },
+            new byte[]{0x32, (byte)0xbe, 0x00, 0x00 }),
+    /** RTF document */
+    RTF("{\\rtf"),
+    /** PDF document */
+    PDF("%PDF"),
+    // keep UNKNOWN always as last enum!
+    /** UNKNOWN magic */
+    UNKNOWN(new byte[0]);
+
+    final byte[][] magic;
+
+    FileMagic(long magic) {
+        this.magic = new byte[1][8];
+        LittleEndian.putLong(this.magic[0], 0, magic);
+    }
+
+    FileMagic(byte[]... magic) {
+        this.magic = magic;
+    }
+
+    FileMagic(String magic) {
+        this(magic.getBytes(LocaleUtil.CHARSET_1252));
+    }
+
+    public static FileMagic valueOf(byte[] magic) {
+        for (FileMagic fm : values()) {
+            int i=0;
+            boolean found = true;
+            for (byte[] ma : fm.magic) {
+                for (byte m : ma) {
+                    byte d = magic[i++];
+                    if (!(d == m || (m == 0x70 && (d == 0x10 || d == 0x20 || d == 0x40)))) {
+                        found = false;
+                        break;
+                    }
+                }
+                if (found) {
+                    return fm;
+                }
+            }
+        }
+        return UNKNOWN;
+    }
+
+    /**
+     * Get the file magic of the supplied InputStream (which MUST
+     *  support mark and reset).<p>
+     *
+     * If unsure if your InputStream does support mark / reset,
+     *  use {@link #prepareToCheckMagic(InputStream)} to wrap it and make
+     *  sure to always use that, and not the original!<p>
+     *
+     * Even if this method returns {@link FileMagic#UNKNOWN} it could potentially mean,
+     *  that the ZIP stream has leading junk bytes
+     *
+     * @param inp An InputStream which supports either mark/reset
+     */
+    public static FileMagic valueOf(InputStream inp) throws IOException {
+        if (!inp.markSupported()) {
+            throw new IOException("getFileMagic() only operates on streams which support mark(int)");
+        }
+
+        // Grab the first 8 bytes
+        byte[] data = IOUtils.peekFirst8Bytes(inp);
+
+        return FileMagic.valueOf(data);
+    }
+
+
+    /**
+     * Checks if an {@link InputStream} can be reseted (i.e. used for checking the header magic) and wraps it if not
+     *
+     * @param stream stream to be checked for wrapping
+     * @return a mark enabled stream
+     */
+    public static InputStream prepareToCheckMagic(InputStream stream) {
+        if (stream.markSupported()) {
+            return stream;
+        }
+        // we used to process the data via a PushbackInputStream, but user code could provide a too small one
+        // so we use a BufferedInputStream instead now
+        return new BufferedInputStream(stream);
+    }
+}
+```
+
+在这给出主要的代码，其主要就是根据 InputStream 前 8 个字节来判断文件的类型，毫无以为这就是最优雅的解决方式。一开始，其实我也是在想对于压缩文件的前几个字节似乎是由不同的定义的，[magicmumber](https://en.wikipedia.org/wiki/Magic_number_%28programming%29)。因为 FileMagic 的依赖和3.16 版本是兼容的，所以我只需要加入这个类就可以了，因此我们现在读取 word 文件的正确做法是：
+
+```
+    private static String readDoc (String filePath, InputStream is) {
+        String text= "";
+        is = FileMagic.prepareToCheckMagic(is);
+        try {
+            if (FileMagic.valueOf(is) == FileMagic.OLE2) {
+                WordExtractor ex = new WordExtractor(is);
+                text = ex.getText();
+                ex.close();
+            } else if(FileMagic.valueOf(is) == FileMagic.OOXML) {
+                XWPFDocument doc = new XWPFDocument(is);
+                XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
+                text = extractor.getText();
+                extractor.close();
+            }
+        } catch (Exception e) {
+            logger.error("for file " + filePath, e);
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+        return text;
+    }
+```
+
+## excel 篇
+对于 excel 篇，我也就不去找之前的方案和现在的方案的对比了。就给出我现在的最佳做法了：
+
+```
+    @SuppressWarnings("deprecation" )
+    private static String readExcel(String filePath, InputStream inp) throws Exception {
+        Workbook wb;
+        StringBuilder sb = new StringBuilder();
+        try {
+            if (filePath.endsWith(".xls")) {
+                wb = new HSSFWorkbook(inp);
+            } else {
+                wb = StreamingReader.builder()
+                        .rowCacheSize(1000)    // number of rows to keep in memory (defaults to 10)
+                        .bufferSize(4096)     // buffer size to use when reading InputStream to file (defaults to 1024)
+                        .open(inp);            // InputStream or File for XLSX file (required)
+            }
+            sb = readSheet(wb, sb, filePath.endsWith(".xls"));
+            wb.close();
+        } catch (OLE2NotOfficeXmlFileException e) {
+            logger.error(filePath, e);
+        } finally {
+            if (inp != null) {
+                inp.close();
+            }
+        }
+        return sb.toString();
+    }
+
+    private static String readExcelByFile(String filepath, File file) {
+        Workbook wb;
+        StringBuilder sb = new StringBuilder();
+        try {
+            if (filepath.endsWith(".xls")) {
+                wb = WorkbookFactory.create(file);
+            } else {
+                wb = StreamingReader.builder()
+                        .rowCacheSize(1000)    // number of rows to keep in memory (defaults to 10)
+                        .bufferSize(4096)     // buffer size to use when reading InputStream to file (defaults to 1024)
+                        .open(file);            // InputStream or File for XLSX file (required)
+            }
+            sb = readSheet(wb, sb, filepath.endsWith(".xls"));
+            wb.close();
+        } catch (Exception e) {
+            logger.error(filepath, e);
+        }
+        return sb.toString();
+    }
+
+    private static StringBuilder readSheet(Workbook wb, StringBuilder sb, boolean isXls) throws Exception {
+        for (Sheet sheet: wb) {
+            for (Row r: sheet) {
+                for (Cell cell: r) {
+                    if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+                        sb.append(cell.getStringCellValue());
+                        sb.append(" ");
+                    } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                        if (isXls) {
+                            DataFormatter formatter = new DataFormatter();
+                            sb.append(formatter.formatCellValue(cell));
+                        } else {
+                            sb.append(cell.getStringCellValue());
+                        }
+                        sb.append(" ");
+                    }
+                }
+            }
+        }
+        return sb;
+    }
+```
+
+其实，对于 excel 读取，我的工具面临的最大问题就是内存溢出。经常在读取某些特别大的 excel 文件的时候都会带来一个内存溢出的问题。后来我终于找到一个优秀的工具 [excel-streaming-reader](https://github.com/monitorjbl/excel-streaming-reader)，它可以流式的读取 xlsx 文件，将一些特别大的文件拆分成小的文件去读。
+
+另外一个做的优化就是，对于可以使用 File 对象的场景下，我是去使用 File 对象去读取文件而不是使用 InputStream 去读取，因为使用 InputStream 需要把它全部加载到内存中，所以这样是非常占用内存的。
+
+最后，我的一点小技巧就是使用 `cell.getCellType` 去减少一些数据量，因为我只需要获取一些文字以及数字的字符串内容就可以了。
+
+以上，就是我在使用 POI 读取文件的一些探索和发现，希望对你能有所帮助。上面的这些例子也是在我的一款工具 [everywhere](https://github.com/neal1991/everywhere/) 中的应用（这款工具主要是可以帮助你在电脑中进行内容的全文搜索），感兴趣的可以看看，欢迎 star 或者 pr。
+
