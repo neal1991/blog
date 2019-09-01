@@ -13,7 +13,7 @@ git pull origin master
 git push origin master
 
 cd themes/hugo-nuo
-git pull origin master
+# git pull origin master
 cd ../../
 
 
