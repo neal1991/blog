@@ -34,7 +34,7 @@ java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar bur
 
 ## Burp 开发
 
-老是说其实 Burp 插件开发其实还是比较简单的，只要你掌握常规的套路，熟悉了基本的 API 之后，基本就可以插件的开发。插件开发最困难的部分其实是 GUI 的开发，不过这也属于 JAVA GUI 开发的范畴，这个暂不讨论。Burp 开发注意以下几点：
+老是说其实 Burp 插件开发其实还是比较简单的，只要你掌握常规的套路，熟悉了基本的 API 之后，基本就可以进行插件的开发。插件开发最困难的部分其实是 GUI 的开发，不过这也属于 JAVA GUI 开发的范畴，这个暂不讨论。Burp 开发注意以下几点：
 
 * 所有 Burp 插件都必须实现 IBurpExtender 接口
 * 实现的类必须叫做 BurpExtender
