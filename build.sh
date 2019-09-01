@@ -12,9 +12,9 @@ git commit -m "$msg"
 git pull origin master
 git push origin master
 
-cd themes/hugo-nuo
+#cd themes/hugo-nuo
 # git pull origin master
-cd ../../
+#cd ../../
 
 
 # Build the project. 
