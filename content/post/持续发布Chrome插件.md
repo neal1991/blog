@@ -164,3 +164,5 @@ CircleCi 是一款还不错的持续发布工具，结合 Github 其实还有还
 
 * https://circleci.com/blog/continuously-deploy-a-chrome-extension/
 
+![m1jSLd.jpg](https://s2.ax1x.com/2019/08/19/m1jSLd.jpg)
+
