@@ -32,6 +32,8 @@ git commit -m "$msg"
 # Push source and build repos.
 git pull origin master
 git push origin master
+git commit -m "rebuild site"
+git push
 # cd ../../neal1991.github.io/
 # git pull
 # git push all master

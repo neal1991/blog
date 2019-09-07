@@ -89,4 +89,3 @@ object-131 中名为 “icon” 的图标流可以保存为 “jpg” 文件，�
 
 通过 @EdgeSpot_io 追随我们。
 
-![m1jSLd.jpg](https://s2.ax1x.com/2019/08/19/m1jSLd.jpg)

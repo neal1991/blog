@@ -72,5 +72,5 @@ public void processProxyMessage(boolean messageIsRequest, final IInterceptedProx
 
 其实总的来说 Burp 插件开发并不特别困难，只要当一个合格的 API 调用者就可以了。网上目前也有很多开源的 Burp 插件代码，其实你可以找一个感兴趣的 Burp 插件代码看一下，你就可以快速地了解这些 API 的作用。其实 Burp 的 Extender 中的 APIs 就已经列出了所有可用的 API 接口。
 
-![m1jSLd.jpg](https://s2.ax1x.com/2019/08/19/m1jSLd.jpg)
+!
 

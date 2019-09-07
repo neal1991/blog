@@ -99,6 +99,3 @@ try (FileInputStream input = new FileInputStream("file.txt")) {
 
 以上
    
-欢迎搜索微信号 mad_coder 或者扫描二维码关注公众号：
-
-![9tMvlT.jpg](https://s1.ax1x.com/2018/02/17/9tMvlT.jpg)
