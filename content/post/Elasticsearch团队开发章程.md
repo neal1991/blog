@@ -123,5 +123,8 @@ date: "2018-06-16"
 
 [Rust’s Code of Conduct](https://www.rust-lang.org/en-US/conduct.html), [Rust video on Conduct](https://youtu.be/dIageYT0Vgg?t=7m2s)
 
+欢迎搜索微信号 mad_coder 或者扫描二维码关注公众号：
+
+![93cfyj.jpg](https://user-gold-cdn.xitu.io/2018/2/10/1617eae1b59c001c?w=258&h=258&f=jpeg&s=27683)
  
 
