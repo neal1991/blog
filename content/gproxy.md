@@ -10,7 +10,7 @@ Golang 以前的依赖管理一直饱受诟病，社区的方案也层出不强�
 
 ## 升级 Golang 版本
 
-其实升级 Golang 版本是非常简单的，只要移除之前的 Golang，然后复制新版本的 Golang 就可以了。以我之前的 VPS 为例，之前安装的 Golang 版本是 1.9。
+其实升级 Golang 版本是非常简单的，只要移除之前的 Golang，然后复制新版本的 Golang 就可以了。以我之前的 VPS 为例（CentOS,亲测苹果系统可以使用同样的方式升级），之前安装的 Golang 版本是 1.9。
 
 1. 移除旧版本 Golang
 
@@ -25,7 +25,7 @@ tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz
 ```
 3. 配置 Golang 环境
 
-如果你之前配置过 Golang 的环境，那么你可以找直接无缝升级。主要只是需要配置 GOROOT 以及 GOPATH 即可，对于 1.13 其实这两个变量已经不是必要的了。但有一个配置很重要，就是将 gproxy 的代理设置为国内的代理，这样你就能体验飞一般的畅快。
+如果你之前配置过 Golang 的环境，那么你可以找直接升级。主要只是需要配置 GOROOT 以及 GOPATH 即可，对于 1.13 其实这两个变量已经不是必要的了。不过我发现我在安装的依赖的时候，出现报错信息,通过配置 GOROOT 为 `/usr/loca/go` 即可解决。但有一个配置很重要，就是将 goproxy 设置为国内的代理（这里使用的是七牛云的代理），这样你就能体验飞一般的畅快。
 
 ```
 export GOPROXY=https://goproxy.cn,direct
