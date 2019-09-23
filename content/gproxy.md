@@ -1,12 +1,12 @@
 ---
-title: "升级 Goproxy 真香"
+title: "Golang 1.13 真香"
 author: Neal
 tags: [golang, web 开发, 安全开发]
 categories: [golang]
 date: "2019-02-22" 
 ---
 
-Golang 以前的依赖管理一直饱受诟病，社区的方案也层出不强，比如 vendor, glide, godep 等。之前的依赖管理一直是依靠 GOPATH 或者将依赖代码下载到本地，这种方式都有劣势。另外由于特殊的网络环境，导致谷歌的大部分包都没有办法下载。才 Golang 1.11 开始，官方已内置了更为强大的 Go modules 来一统多年来 Go 包依赖管理混乱的局面，从 1.13 开始将成为默认配置。配合 Goproxy 来使用来说，真香。这次配合我之前的 golang 开源项目 [gshark](https://github.com/neal1991/gshark) 做了一升级，升级花费的时间不超过 5 分钟，真香。
+Golang 以前的依赖管理一直饱受诟病，社区的方案也层出不强，比如 vendor, glide, godep 等。之前的依赖管理一直是依靠 GOPATH 或者将依赖代码下载到本地，这种方式都有劣势。另外由于特殊的网络环境，导致谷歌的大部分包都没有办法下载。才 Golang 1.11 开始，官方已内置了更为强大的 Go modules 来一统多年来 Go 包依赖管理混乱的局面，从 1.13 开始将成为默认配置。配合 Goproxy 来使用来说，真香。这次配合我之前的 golang 开源项目 [gshark](https://github.com/neal1991/gshark) 升级到 1.13，升级花费的时间不超过 5 分钟，真香。
 
 ## 升级 Golang 版本
 
@@ -30,4 +30,25 @@ tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz
 ```
 export GOPROXY=https://goproxy.cn,direct
 ```
+
+## 原有代码升级
+
+之前 [gshark](https://github.com/neal1991/gshark) 没有使用任何的依赖管理，完全是通过 GOPATH 存放依赖。这有一个问题，就是项目的依赖做出了不兼容的版本升级，最终导致项目构建失败。通过 Go modules 可以锁定依赖版本，从而避免这个问题。以 gshark(https://github.com/neal1991/gshark) 为例进行 Go modules 的升级。
+
+1. mod 初始化
+
+cd 到项目文件夹中
+
+```
+go mod init github.com/neal1991/gshark
+```
+
+2. 查找依赖
+
+```
+go get ./...
+```
+
+只需要两部就可以升级使用 Go modules 就可以了。
+
 
