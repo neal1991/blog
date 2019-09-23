@@ -1,5 +1,5 @@
 ---
-title: "Golang 1.13 真香"
+title: "真香系列之 Golang 升级"
 author: Neal
 tags: [golang, web 开发, 安全开发]
 categories: [golang]
@@ -51,4 +51,46 @@ go get ./...
 
 只需要两部就可以升级使用 Go modules 就可以了。
 
+
+## GShark
+
+GShark 是我之前开源的一款 Github 敏感信息监测的系统，之前也有写过[文章](https://mp.weixin.qq.com/s?src=11&timestamp=1569238467&ver=1870&signature=a*PjTnhB8*Dvc1*Xn-4Vom-nY*CUTPmDAKfphYD4pUr7vGsW0KGcZQikkEqUY6nkEgTIAIP5TteLbgECjBskQdJiO8Wc3B4RTNRSc2OAsThOwAGTtITMivnFEYqlYtFv&new=1)介绍这个项目。这个工具应该目前有一些同学在使用，可能使用过程中最大的问题就是项目的构建。因为可能有的同学之前不是特别熟悉 Golang 语言，觉得部署起来很麻烦。但其实 Golang 项目的构建特别方便，之前不方便主要还是由于项目的依赖比较难下。可是如果 Golang 升级到 1.13 之后，项目构建仅仅需要几步。
+
+1. 下载代码
+
+```
+git clone https://github.com/neal1991/gshark
+```
+
+2. 下载依赖
+
+```
+go get ./...
+```
+
+3. 编译
+
+```
+go build main.go
+```
+
+4. 运行
+
+运行之前需要把 conf 文件夹里面的 app-template.ini 重命名为 app.ini，使用自己的配置即可。
+
+```
+// 启动 web 服务
+./main web
+
+// 启动爬虫
+./main scan
+```
+
+通过上面几步就可以启动 GShark 服务了。GShark 目前仅仅由我一个人维护，希望可以吸收社区优秀的建议，欢迎 PR。可以扫码加入微信群。
+
+![uiIAiD.png](https://s2.ax1x.com/2019/09/23/uiIAiD.png)
+
+## 总结
+
+虽然说 gorpoxy 以及 modules 都不是 1.13 版本才有的。但是目前这些特性在 1.13 版本已经稳定运行。总的来说，升级到 Go 1.13，真香。
 
