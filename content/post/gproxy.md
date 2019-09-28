@@ -14,22 +14,22 @@ Golang 以前的依赖管理一直饱受诟病，社区的方案也层出不强�
 
 1. 移除旧版本 Golang
 
-```
-rm -rf /usr/local/go
-```
+    ```
+    rm -rf /usr/local/go
+    ```
 2. 安装新版本 Golang
 
-```
-wget https://dl.google.com/go/go1.13.linux-amd64.tar.gz
-tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz
-```
+    ```
+    wget https://dl.google.com/go/go1.13.linux-amd64.tar.gz
+    tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz
+    ```
 3. 配置 Golang 环境
 
-如果你之前配置过 Golang 的环境，那么你可以找直接升级。主要只是需要配置 GOROOT 以及 GOPATH 即可，对于 1.13 其实这两个变量已经不是必要的了。不过我发现我在安装的依赖的时候，出现报错信息,通过配置 GOROOT 为 `/usr/loca/go` 即可解决。但有一个配置很重要，就是将 goproxy 设置为国内的代理（这里使用的是七牛云的代理），这样你就能体验飞一般的畅快。
+    如果你之前配置过 Golang 的环境，那么你可以找直接升级。主要只是需要配置 GOROOT 以及 GOPATH 即可，对于 1.13 其实这两个变量已经不是必要的了。不过我发现我在安装的依赖的时候，出现报错信息,通过配置 GOROOT 为 `/usr/loca/go` 即可解决。但有一个配置很重要，就是将 goproxy 设置为国内的代理（这里使用的是七牛云的代理），这样你就能体验飞一般的畅快。
 
-```
-export GOPROXY=https://goproxy.cn,direct
-```
+    ```
+    export GOPROXY=https://goproxy.cn,direct
+    ```
 
 ## 原有代码升级
 
@@ -37,19 +37,19 @@ export GOPROXY=https://goproxy.cn,direct
 
 1. mod 初始化
 
-cd 到项目文件夹中
+    cd 到项目文件夹中
 
-```
-go mod init github.com/neal1991/gshark
-```
+    ```
+    go mod init github.com/neal1991/gshark
+    ```
 
 2. 查找依赖
 
-```
-go get ./...
-```
+    ```
+    go get ./...
+    ```
 
-只需要两部就可以升级使用 Go modules 就可以了。
+    只需要两部就可以升级使用 Go modules 就可以了。
 
 
 ## GShark
@@ -58,33 +58,33 @@ GShark 是我之前开源的一款 Github 敏感信息监测的系统，之前�
 
 1. 下载代码
 
-```
-git clone https://github.com/neal1991/gshark
-```
+    ```
+    git clone https://github.com/neal1991/gshark
+    ```
 
 2. 下载依赖
 
-```
-go get ./...
-```
+    ```
+    go get ./...
+    ```
 
 3. 编译
 
-```
-go build main.go
-```
+    ```
+    go build main.go
+    ```
 
 4. 运行
 
-运行之前需要把 conf 文件夹里面的 app-template.ini 重命名为 app.ini，使用自己的配置即可。
+    运行之前需要把 conf 文件夹里面的 app-template.ini 重命名为 app.ini，使用自己的配置即可。
 
-```
-// 启动 web 服务
-./main web
+    ```
+    // 启动 web 服务
+    ./main web
 
-// 启动爬虫
-./main scan
-```
+    // 启动爬虫
+    ./main scan
+    ```
 
 通过上面几步就可以启动 GShark 服务了。GShark 目前仅仅由我一个人维护，希望可以吸收社区优秀的建议，欢迎 PR。可以扫码加入微信群。
 
