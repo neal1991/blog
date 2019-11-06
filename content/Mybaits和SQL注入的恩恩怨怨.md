@@ -100,7 +100,7 @@ protected void addCriterion(String condition) {
 keyword = keyword.replaceAll("[^a-zA-Z0-9\\s+]", "");
 ```
 
-但是这种写法并不是一种科学的写法，这样的写法存在一种弊端，就是如果你的 keyword 需要包含符号该怎么办，那么你是不是就要考虑更多的情况，是不是就需要添加更多的逻辑判断，是不是就存在被绕过的可能了？那么正确的写法应该是什么呢？其实 [mybatis 官网](http://mybatis.org/generator/generatedobjects/exampleClassUsage.html) 已经给出了 Comple Queries 的范例：
+但是这种写法并不是一种科学的写法，这样的写法存在一种弊端，就是如果你的 keyword 需要包含符号该怎么办，那么你是不是就要考虑更多的情况，是不是就需要添加更多的逻辑判断，是不是就存在被绕过的可能了？那么正确的写法应该是什么呢？其实 [mybatis 官网](http://mybatis.org/generator/generatedobjects/exampleClassUsage.html) 已经给出了 Complex Queries 的范例：
 
 ```java
  TestTableExample example = new TestTableExample();
