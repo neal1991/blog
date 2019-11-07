@@ -154,6 +154,24 @@ private String getBody(IHttpRequestResponse messageInfo) {
 
 ![MAqcJH.gif](https://s2.ax1x.com/2019/11/07/MAqcJH.gif)
 
+其实，我认为在 Burp 插件开发过程中最重要的部分就是调试了。通过调试可以快速提高开发效率。以 IDE IDEA 为例，只需要以下几步就可以进行插件开发地调试：
+
+1. 配置 debug 配置项，点击 IDE 右上角就可以新增配置项。
+
+![MAxeiT.gif](https://s2.ax1x.com/2019/11/07/MAxeiT.gif)
+
+2. 在终端中通过上述的配置项启动 burp 插件。
+
+```
+java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar burpsuite_community_v2.1.02.jar
+```
+
+3. 在 Burp 中通过上面的方式安装打包好的插件。
+
+4. 在 IDE 中相应的代码打上断点，并打开 debug 就可以进行调试了。
+
+![MAz09U.gif](https://s2.ax1x.com/2019/11/07/MAz09U.gif)
+
 ## 总结
 
 以上就是在开发被动扫描器 Chrome 插件以及 Burp 插件遇到的一些坑，在这里和大家分享一下。其实被动扫描器开发，最重要的还是一些细节方面的考虑，可以将插件的功能做到更完美。
