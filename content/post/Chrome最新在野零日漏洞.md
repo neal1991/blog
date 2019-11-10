@@ -4,6 +4,7 @@ author: Neal
 tags: [安全, web 安全, 漏洞]
 keywords: [Chrome,安全漏洞,零日漏洞,apt,卡巴斯基,javascript]
 categories: [安全]
+description: "Chrome 最新在野零日漏洞，赶紧升级你的 Chrome 浏览器"
 date: "2019-11-10" 
 ---
 
