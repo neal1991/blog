@@ -2,6 +2,7 @@
 title: "Chrome 最新零日漏洞"
 author: Neal
 tags: [安全, web 安全, 漏洞]
+keywords: [Chrome,安全漏洞,零日漏洞,apt,卡巴斯基,javascript]
 categories: [安全]
 date: "2019-11-10" 
 ---
