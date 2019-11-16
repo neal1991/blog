@@ -4,6 +4,7 @@ author: Neal
 description: "Latex 专业的参考tex对于论文写作或者其他的一些需要拍版的写作来说，还是非常有意义的。我在网上看到这个对于Latex的入门介绍还是比较全面的，Arbitrary reference .所以将会翻译出来，供初学者学习 
 基本的使用TeX会产生什么最基本的来说，你会生成一个.tex文件，即你的文档，即youfile.tex。运行latex you file.tex可以让TeX工作并且生成your"
 tags: [latex]
+keywords: [latex]
 categories: [论文写作]
 date: "2016-12-06 20:24:10"
 ---

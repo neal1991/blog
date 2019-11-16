@@ -4,6 +4,7 @@ author: Neal
 description: "Latex 专业的参考tex对于论文写作或者其他的一些需要拍版的写作来说，还是非常有意义的。我在网上看到这个对于Latex的入门介绍还是比较全面的，Arbitrary  reference .所以将会翻译出来，供初学者学习。TeX, LaTeX以及他们的用法Tex:排版Tex是Donald Knuth发明的一种排版语言。排版意味着从结构性的文本到审美的一个标准。在Tex里面，你可以控制文本的根本结构"
 tags: [latex]
 categories: [论文写作]
+keywords: [latex]
 date: "2016-12-03 22:54:13"
 ---
 # Latex 专业的参考
