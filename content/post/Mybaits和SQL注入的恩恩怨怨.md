@@ -2,6 +2,7 @@
 title: "MyBatis 和 SQL 注入的恩恩怨怨"
 author: Neal
 tags: [安全, web 安全, SQL 注入]
+keywords: [sql注入,mybatis,JDBC,mybatis generator,预编译]
 categories: [安全]
 date: "2019-10-30" 
 ---
@@ -165,7 +166,7 @@ public void addKeywordTo(String keyword, UserExample userExample) {
 
 如果你猛地一看到这个问题，你可能会觉得迟疑？使用 `#{}` 就可以彻底杜绝 SQL 注入么，不一定吧。但如果你仔细分析一下，你就会发现答案是肯定的。具体的原因让我和你娓娓道来。
 
-首先我们需要先搞清楚 MyBatis 中 `#{}` 是如何声明的。当参数通过 `#{}` 声明的，参数就会通过 PreparedStatement 来执行，即预编译的方式来执行。预编译你应该不陌生，因为在 JDBC 中就已经有了预编译的接口。这也对应了开头文中我们提到的一点，Mybatis 并不是能解决 SQL 注入的核心，预编译才是。预编译不仅可以对 SQL 语句进行转义，避免 SQL 注入，还可以增加执行效率。Mybatis 底层其实也是通过 JDBC 来实现的。以 MyBatis 3.3.1 为例，jdbc 中的 SqlRunner 就设计到具体 SQL 语句的实现。
+首先我们需要先搞清楚 MyBatis 中 `#{}` 是如何声明的。当参数通过 `#{}` 声明的，参数就会通过 PreparedStatement 来执行，即预编译的方式来执行。预编译你应该不陌生，因为在 JDBC 中就已经有了预编译的接口。这也对应了开头文中我们提到的一点，MyBatis 并不是能解决 SQL 注入的核心，预编译才是。预编译不仅可以对 SQL 语句进行转义，避免 SQL 注入，还可以增加执行效率。MyBatis 底层其实也是通过 JDBC 来实现的。以 MyBatis 3.3.1 为例，jdbc 中的 SqlRunner 就设计到具体 SQL 语句的实现。
 
 ![KqtZxe.png](https://s2.ax1x.com/2019/11/02/KqtZxe.png)
 
@@ -174,7 +175,6 @@ public void addKeywordTo(String keyword, UserExample userExample) {
 ```java
 public int update(String sql, Object... args) throws SQLException {
     PreparedStatement ps = this.connection.prepareStatement(sql);
-
     int var4;
     try {
         this.setParameters(ps, args);
@@ -185,9 +185,7 @@ public int update(String sql, Object... args) throws SQLException {
         } catch (SQLException var11) {
             ;
         }
-
     }
-
     return var4;
 }
 ```
@@ -262,7 +260,7 @@ jdbc:mysql://localhost:3306/mybatis?&useServerPrepStmts=true&cachePrepStmts=true
 * 能不使用拼接就不要使用拼接，这应该也是避免 SQL 注入最基本的原则
 * 在使用 `${}` 传入变量的时候，一定要注意变量的引入和过滤，避免直接通过 `${}` 传入外部变量
 * 不要自己造轮子，尤其是在安全方面，其实在这个问题上，框架已经提供了标准的方法。如果按照规范开发的话，也不会导致 SQL 注入问题
-* 可以注意 MyBatis 中 `targetRuntime` 的配置，如果不需要复杂的条件查询的话，建议直接使用 `MyBatis3Simple`。这样可以更好地直接杜绝风险，因为一旦有风险点，就有发生问题的可能。
+* 可以注意 MyBatis 中 `targetRuntime` 的配置，如果不需要复杂的条件查询的话，建议直接使用 `MyBatis3Simple`。这样可以更好地直接杜绝风险，因为一旦有风险点，就有发生问题的可能
 
 
 ## Reference
