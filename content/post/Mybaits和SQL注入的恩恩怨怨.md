@@ -5,6 +5,9 @@ tags: [安全, web 安全, SQL 注入]
 categories: [安全]
 date: "2019-10-30" 
 ---
+本文首发于安全客平台
+
+![](https://p4.ssl.qhimg.com/t019817257e653fdf5e.jpg)
 
 MyBatis 是一种持久层框架，介于 JDBC 和 Hibernate 之间。通过 MyBatis 减少了手写 SQL 语句的痛苦，使用者可以灵活使用 SQL 语句，支持高级映射。但是 MyBatis 的推出不是只是为了安全问题，有很多开发认为使用了 MyBatis 就不会存在 SQL 注入了，真的是这样吗？使用了 MyBatis 就不会有 SQL 注入了吗？答案很明显是 NO。 MyBatis 它只是一种持久层框架，它并不会为你解决安全问题。当然，如果你能够遵循规范，按照框架推荐的方法开发，自然也就避免 SQL 注入问题了。本文就将 MyBatis 和 SQL 注入这些恩恩怨怨掰扯掰扯。（注本文所说的 MyBatis 默认指的是 MyBatis3）
 
@@ -266,5 +269,9 @@ jdbc:mysql://localhost:3306/mybatis?&useServerPrepStmts=true&cachePrepStmts=true
 
 * https://blog.csdn.net/Marvel__Dead/article/details/69486947
 * https://www.jianshu.com/p/7ef5499d5f60
+
+本文由安全客原创发布
+转载，请参考转载声明，注明出处： https://www.anquanke.com/post/id/190170
+安全客 - 有思想的安全新媒体
 
 
