@@ -3,6 +3,7 @@ title: "跨站请求伪造（CSRF）攻击"
 author: Neal
 tags: [安全, web 安全]
 categories: [安全]
+keywords: [CSRF,web 安全,XSS]
 date: "2019-02-21" 
 ---
 ![kRIUNn.png](https://s2.ax1x.com/2019/02/21/kRIUNn.png)

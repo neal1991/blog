@@ -4,6 +4,7 @@ author: Neal
 description: "Medium(https://medium.com)（需要翻墙访问）是国外非常知名的一个博客平台。上面经常有很多知名的技术大牛在上面发布博客，现在一般国内的搬运的技术文章大多数都是来自于这个平台。 
 Medium文章格式显示地非常优雅，但是存在一个问题。众所周知，markdown已经是最受程序猿欢迎的文本编辑格式之一。但是Medium仅仅支持markdown格式导入，不支持markdown格式的导出"
 tags: [markdown,博客,chrome插件]
+keywords: [medium,markdown,chrome extension]
 categories: [开发工具]
 date: "2017-09-23 16:33:06"
 ---
