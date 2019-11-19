@@ -10,12 +10,19 @@
 
 This post is a write up of an already-fixed XSS in AMP4Email I reported via [Google Vulnerability Reward Program](https://www.google.com/about/appsecurity/reward-program/) in August 2019. The XSS is an example of a real-world exploitation of well-known browser issue called DOM Clobbering.
 
-## What is AMP4Email
+这篇文章是我在2019年8月通过[ Google 漏洞奖励计划](https://www.google.com/about/appsecurity/reward-program/)报告的 AMP4Email 中已经修复的 XSS 的文章。该 XSS 是对著名浏览器问题 DOM Clobbering 的真实利用案例。
+
+## 什么是 AMP4Email
 
 AMP4Email (also known as dynamic mail) is a new feature of Gmail that makes it possible for emails to include dynamic HTML content. While composing emails containing HTML markup has been done for years now, it’s been usually assumed that the HTML contains only static content, i.e. some kind of formatting, images etc. without any scripts or forms. AMP4Email is meant to go one step further and allow dynamic content in emails. In a [post in Google official G Suite blog](https://gsuiteupdates.googleblog.com/2019/06/dynamic-email-in-gmail-becoming-GA.html), the use caes for dynamic mails are nicely summarized:
 
+AMP4Email（也称为动态邮件）是 Gmail 的一项新功能，可以让电子邮件包含动态 HTML 内容。撰写包含 HTML 标签的电子邮件已经很多年了，但通常认为 HTML 仅包含静态内容，即某种格式，图像等，没有任何脚本或表单。 AMP4Email 打算更进一步，允许电子邮件中包含动态内容。 在[ Google 官方 G Suite 官方博客中的帖子](https://gsuiteupdates.googleblog.com/2019/06/dynamic-email-in-gmail-becoming-GA.html)中，对动态邮件的使用案例进行了很好的总结 
+
 > **With dynamic email, you can easily take action directly from within the message itself, like RSVP to an event, fill out a questionnaire, browse a catalog or respond to a comment.**
-<br>**Take commenting in Google Docs, for example. Instead of receiving individual email notifications when someone mentions you in a comment, now, you’ll see an up-to-date thread in Gmail where you can easily reply or resolve the comment, right from within the message.**
+**Take commenting in Google Docs, for example. Instead of receiving individual email notifications when someone mentions you in a comment, now, you’ll see an up-to-date thread in Gmail where you can easily reply or resolve the comment, right from within the message.**
+
+> ****通过动态邮件，你可以轻松地直接从消息本身直接操作，例如对事件进行快速回复，填写问卷，浏览目录或回复评论。**
+**例如在 Google 文档中进行评论。现在，你将不再在有人在评论中提及你时接收到单独的电子邮件通知，而是会在 Gmail 中看到最新的主题，你可以在邮件中直接从中轻松回复或解决评论。**
 
 The feature raises some obvious security questions; the most important one probably being: what about Cross-Site Scripting (XSS)? If we’re allowing dynamic content in emails, does that mean that we can easily inject arbitrary JavaScript code? Well – no; it’s not that easy.
 
