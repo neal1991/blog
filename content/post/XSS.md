@@ -2,6 +2,7 @@
 title: "GMail XSS 漏洞分析"
 author: Neal
 tags: [安全, web 安全,GMail,XSS,DOM Clobbering]
+keywords: [XSS,web安全]
 categories: [安全]
 date: "2019-11-24" 
 ---
