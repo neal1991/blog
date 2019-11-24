@@ -1,3 +1,11 @@
+---
+title: "GMail XSS 漏洞分析"
+author: Neal
+tags: [安全, web 安全,GMail,XSS,DOM Clobbering]
+categories: [安全]
+date: "2019-11-24" 
+---
+
 >原文：[XSS in GMail’s AMP4Email via DOM Clobbering](https://research.securitum.com/xss-in-amp4email-dom-clobbering/)
 >
 >译者：[neal1991](https://github.com/neal1991)
@@ -37,7 +45,7 @@ AMP4Email 具有[强验证器](https://github.com/ampproject/amphtml/blob/master
 
 ## DOM Clobbering
 
-DOM Clobbering 是 web 浏览器的遗留功能，给许多应用程序带来麻烦。基本上，当你在 HTML 中创建一个元素（例如 `<input id = username>`），然后希望从 JavaScript 引用该元素时，通常会使用`document.getElementById('username')` 或者 `document.querySelector('＃username')` 之类的函数。但这不是唯一的方法！
+DOM Clobbering 是 web 浏览器的遗留功能，给许多应用程序带来麻烦。基本上，当你在 HTML 中创建一个元素（例如 `<input id = username>`），然后希望从 JavaScript 引用该元素时，通常会使用 `document.getElementById('username')` 或者 `document.querySelector('#username')` 之类的函数。但这不是唯一的方法！
 
 传统的方法是仅通过全局 `window` 对象的属性来访问它。因此，在这种情况下，`window.username` 与 `document.getElementById('username')` 完全相同！如果应用程序基于某些全局变量的存在做出决定（例如，`if（window.isAdmin）{...}`），则此行为（称为 DOM Cloberring）可能导致有趣的漏洞。
 
@@ -56,7 +64,7 @@ if (window.test1.test2) {
 
 让我们从第一个问题开始。最常被引用的解决方法是使用 `<form>` 标签。标签 `<form>` 的每个子元素 `<input>` 都被添加为 `<form>` 的属性，该属性的名称和 `<input>` 的 `name` 属性相同。考虑以下示例：
 
-```javascript
+```html
 <form id=test1>
   <input name=test2>
 </form>
@@ -78,7 +86,7 @@ Object.getOwnPropertyNames(window)
 
 该代码返回两个元素：`HTMLAreaElement`（`<area>`）和 `HTMLAnchorElement`（`<a>`）。 AMP4Email 中不允许使用第一个，因此仅关注第二个。如果是 `<a>` 元素，则 `toString` 仅返回 `href` 属性的值。考虑示例：
 
-```javascript
+```html
 <a id=test1 href=https://securitum.com>
 <script>
   alert(test1); // alerts "https://securitum.com"
@@ -87,7 +95,7 @@ Object.getOwnPropertyNames(window)
 
 在这一点上，似乎我们想解决最初的问题（比如通过 DOM Clobbering 获取 `window.test1.test2` 的值），我们需要类似于以下代码：
 
-```javascript
+```html
 <form id=test1>
   <a name=test2 href="x:alert(1)"></a>
 </form>
@@ -97,19 +105,12 @@ Object.getOwnPropertyNames(window)
 
 这个问题有一个有趣的解决方法，不过仅仅适用于基于 WebKit 以及 Blink 内核的浏览器。假设我们有两个具有相同 id 的元素：
 
-```javascript
+```html
 <a id=test1>click!</a>
 <a id=test1>click2!</a>
 ```
 
-So what we’re going to get when accessing `window.test1`? I’d intuitively expect getting the first element with that id (this is what happens when you try to call `document.getElementById('#test1')`. In Chromium, however, we actually get an `HTMLCollection`!
-
-
-Fig 4. window.test1 points to HTMLCollection
-
-What is particularly interesting here (and that can be spotted in fig. 4) is that the we can access specific elements in that `HTMLCollection` via index (0 and 1 in the example) as well as by `id`. This means that `window.test1.test1` actually refers to the first element. It turns out that setting `name` attribute would also create new properties in the `HTMLCollection`. So now we have the following code:
-
-那么访问 `window.test1` 时我们将得到什么？我直觉上希望得到具有该 id 的第一个元素（当你尝试调用`document.getElementById('＃test1')` 时会发生这种情况。但是，在 Chromium 中，我们实际上得到了一个`HTMLCollection`！
+那么访问 `window.test1` 时我们将得到什么？我直觉上希望得到具有该 id 的第一个元素（当你尝试调用`document.getElementById('#test1')` 时会发生这种情况。但是，在 Chromium 中，我们实际上得到了一个`HTMLCollection`！
 
 ![McKGoq.png](https://s2.ax1x.com/2019/11/18/McKGoq.png)
 图4. window.test1 指向 HTMLCollection
@@ -143,20 +144,17 @@ What is particularly interesting here (and that can be spotted in fig. 4) is tha
 
 在这一点上，事实证明 AMP4Email 实际上对 DOM Clobbering 采取了某种保护措施，因为它严格禁止 id 属性的某些值，例如：`AMP`（图7）。
 
-![Mc56s0.png](https://s2.ax1x.com/2019/11/19/Mc56s0.png)
+![MRVc2F.png](https://s1.ax1x.com/2019/11/19/MRVc2F.png)
 图7. AMP 是 AMP4Email 中的 id 的无效值
 
-但是，AMP_MODE并没有发生相同的限制。所以我准备了一个代码 `<a id=AMP_MODE>` 看看会发生什么……
+但是，AMP_MODE并没有发生相同的限制。所以我准备了一句代码 `<a id=AMP_MODE>` 看看会发生什么……
 
 …然后我注意到控制台中有一个非常有趣的错误（图8）。
 
 ![Mc5WoF.png](https://s2.ax1x.com/2019/11/19/Mc5WoF.png)
 图8. 加载某些JS文件的 404 错误
 
-
-如图8 所示，AMP4Email 尝试加载某些JS文件，但由于 404 而未能加载。但是，特别引人注目的是，URL中间存在 `undefined`。
-
-（https://cdn.ampproject.org/rtv/undefined/v0/amp-auto-lightbox-0.1.js）。我能够想出的唯一一个合理的解释：AMP 尝试获取 `AMP_MODE` 的属性以将其放入URL。由于 DOM Clobbering，缺少了预期的属性，因此是 `undefined`。包含代码的代码如下所示：
+如图8 所示，AMP4Email 尝试加载某些JS文件，但由于 404 而未能加载。但是，特别引人注目的是，URL （https://cdn.ampproject.org/rtv/undefined/v0/amp-auto-lightbox-0.1.js）中存在 `undefined`。我能够想出的唯一一个合理的解释：AMP 尝试获取 `AMP_MODE` 的属性以将其放入URL。由于 DOM Clobbering，缺少了预期的属性，因此是 `undefined`。包含代码的代码如下所示：
 
 ```javascript
 f.preloadExtension = function(a, b) {
@@ -259,7 +257,7 @@ script-src 'sha512-oQwIl...=='
   https://cdn.ampproject.org/v0/
 ```
 
-我没有找到绕过 CSP 的方法，但是在尝试绕过 CSP 时，我发现了一种绕过基于目录的 CSP的 有趣方法，并且[我在推特上发表了](https://twitter.com/SecurityMB/status/1162690916722839552) （后来发现在 [2016年CTF中已经使用了相同的技巧](https://blog.0daylabs.com/2016/09/09/bypassing-csp/)）。Google在其漏洞赏金计划中，实际上并不期望绕过 CSP 但依然支付全部赏金。这仍然是一个有趣的挑战。 也许其他人会找到绕过的方法🙂
+我没有找到绕过 CSP 的方法，但是在尝试绕过 CSP 时，我发现了一种绕过基于目录的 CSP的 有趣方法，并且[我在推特上发表了](https://twitter.com/SecurityMB/status/1162690916722839552) （后来发现在 [2016年CTF中已经使用了相同的技巧](https://blog.0daylabs.com/2016/09/09/bypassing-csp/)）。Google在其漏洞赏金计划中，实际上并不期望绕过 CSP 但依然支付全部赏金。这仍然是一个有趣的挑战。 也许其他人会找到绕过的方法 🙂
 
 ## 总结
 
