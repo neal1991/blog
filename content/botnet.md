@@ -1,8 +1,9 @@
 https://www.welivesecurity.com/2019/11/26/stantinko-botnet-adds-cryptomining-criminal-activities/
 
 # Stantinko botnet adds cryptomining to its pool of criminal activities
+# 僵尸网络 Stantinko 犯罪活动新增加密挖矿
 
-ESET researchers have discovered that the criminals behind the Stantinko botnet are distributing a cryptomining module to the computers they control
+ESET researchers have discovered that the criminals behind the Stantinko botnet are distributing a cryptomining module to the computers they control.
 
 The operators of the [Stantinko botnet](https://www.welivesecurity.com/2017/07/20/stantinko-massive-adware-campaign-operating-covertly-since-2012/) have expanded their toolset with a new means of profiting from the computers under their control. The roughly half-million-strong botnet – known to have been active since at least 2012 and mainly targeting users in Russia, Ukraine, Belarus and Kazakhstan – now distributes a cryptomining module. Mining Monero, a cryptocurrency whose exchange rate oscillates in 2019 between US$50 and US$110, has been the botnet’s monetizing functionality since at least August 2018. Before that, the botnet performed click fraud, ad injection, social network fraud and password stealing attacks.
 
@@ -13,6 +14,18 @@ This module’s most notable feature is the way it is obfuscated to thwart analy
 We will describe the module’s obfuscation techniques and offer, in a separate article for fellow malware analysts, a possible approach to deal with some of them.
 
 Since Stantinko is constantly developing new and improving its existing custom obfuscators and modules, which are heavily obfuscated, it would be backbreaking to track each minor improvement and change that it introduces. Therefore, we decided to mention and describe only what we believe are significant adjustments in comparison with earlier samples relative to the state in which the module is to be described. After all, we intend just to describe the module as it currently is in this article.
+
+ESET 研究人员发现，Stantinko 僵尸网络背后的犯罪分子正在向他们控制的肉鸡分发加密挖矿模块。
+
+[Stantinko 僵尸网络](https://www.welivesecurity.com/2017/07/20/stantinko-massive-adware-campaign-operating-covertly-since-2012/) 的操纵者已经通过一种新方法扩展了其工具集从受其控制的肉鸡中获利。大约有足足50万的僵尸网络自 2012 年以来一直保持活跃，主要针对俄罗斯，乌克兰，白俄罗斯和哈萨克斯坦的用户-现在分发了一个加密矿模块。门罗币是一种加密货币，其汇率在 2019 年在 50 美元至 110 美元之间波动，自从至少2018年8月以来，它一直是僵尸网络的获利功能。在此之前，僵尸网络进行了点击欺诈，广告注入，社交网络欺诈和密码窃取攻击。
+
+在本文中，我们将介绍Stantinko的加密矿模块并对其功能进行分析。
+
+该模块最显着的功能是它的混淆方式阻碍了分析并避免了检测。由于源级混淆的使用具有一定的随机性，而且Stantinko的操作员会为每个新的受害者编译此模块，因此该模块的每个样本都是唯一的。
+
+我们将在另一篇文章中为恶意软件分析人员介绍该模块的混淆技术，并提供一种处理其中某些问题的可行方法。
+
+由于Stantinko一直在不断开发新的产品并改进其现有的自定义混淆器和模块，这些混淆器和模块被严重混淆，因此跟踪每个微小的改进和引入的改进将很辛苦。因此，我们决定仅提及和描述相对于要描述模块的状态，与早期样本相比，我们认为是重要的调整。毕竟，我们仅打算描述本文中当前的模块。
 
 ## Modified open-source cryptominer
 
