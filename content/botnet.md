@@ -1,7 +1,7 @@
 https://www.welivesecurity.com/2019/11/26/stantinko-botnet-adds-cryptomining-criminal-activities/
 
 # Stantinko botnet adds cryptomining to its pool of criminal activities
-# 僵尸网络 Stantinko 犯罪活动新增加密挖矿
+# 僵尸网络 Stantinko 犯罪活动新增加密货币挖矿
 
 ESET researchers have discovered that the criminals behind the Stantinko botnet are distributing a cryptomining module to the computers they control.
 
@@ -15,23 +15,28 @@ We will describe the module’s obfuscation techniques and offer, in a separate 
 
 Since Stantinko is constantly developing new and improving its existing custom obfuscators and modules, which are heavily obfuscated, it would be backbreaking to track each minor improvement and change that it introduces. Therefore, we decided to mention and describe only what we believe are significant adjustments in comparison with earlier samples relative to the state in which the module is to be described. After all, we intend just to describe the module as it currently is in this article.
 
-ESET 研究人员发现，Stantinko 僵尸网络背后的犯罪分子正在向他们控制的肉鸡分发加密挖矿模块。
+ESET 研究人员发现，Stantinko 僵尸网络背后的犯罪分子正在向他们控制的肉鸡分发加密货币挖矿模块。
 
 [Stantinko 僵尸网络](https://www.welivesecurity.com/2017/07/20/stantinko-massive-adware-campaign-operating-covertly-since-2012/) 的操纵者已经通过一种新方法扩展了其工具集从受其控制的肉鸡中获利。多达 50 万的僵尸网络自 2012 年以来一直保持活跃，主要针对俄罗斯，乌克兰，白俄罗斯和哈萨克斯坦的用户-现在分发了一个加密矿模块。门罗币是一种加密货币，其汇率在 2019 年在 50 美元至 110 美元之间波动，自从至少 2018 年 8 月以来，它一直是僵尸网络的获利手段。在此之前，僵尸网络进行了点击欺诈，广告注入，社交网络欺诈和密码窃取攻击。
 
-在本文中，我们将介绍 Stantinko 的加密挖矿模块并对其功能进行分析。
+在本文中，我们将介绍 Stantinko 的加密货币挖矿模块并对其功能进行分析。
 
 该模块最显着的功能是它的混淆方式阻碍了分析并避免了检测。由于源代码级混淆以及随机性使用，而且 Stantinko 的操纵者会为每个新的受害者编译此模块，因此该模块的每个样本都是唯一的。
 
 我们将在另一篇文章中为恶意软件分析人员介绍该模块的混淆技术，并提供一种处理其中某些问题的可行方法。
 
-由于 Stantinko 一直在不断开发新的产品并改进其现有的自定义混淆器和模块，这些混淆器和模块被严重混淆，因此跟踪每个微小的改进和引入的改进将很辛苦。因此，我们决定仅提及和描述相对于要描述模块的状态，与早期样本相比，我们认为是重要的调整。毕竟，我们仅打算描述本文中当前的模块。
+由于 Stantinko 一直在不断开发新的产品并改进其现有的自定义混淆器和模块，这些混淆器和模块被严重混淆，因此跟踪每个小的改进和修改非常困难。因此，我们决定仅提及和描述与早期样本相比比较重要的调整。最终，在本文中我们仅打算描述模块当前的状态。
 
 ## Modified open-source cryptominer
 
+## 修改后的开源加密货币挖矿
+
 Stantinko’s cryptomining module, which exhausts most of the resources of the compromised machine by mining a cryptocurrency, is a highly modified version of the 【】[xmr-stak](https://github.com/fireice-uk/xmr-stak) open-source cryptominer. All unnecessary strings and even whole functionalities were removed in attempts to evade detection. The remaining strings and functions are heavily obfuscated. ESET security products detect this malware as Win{32,64}/CoinMiner.Stantinko.
 
+Stantinko 的加密货币挖矿模块通过挖掘加密货币来耗尽受感染机器的大部分资源，它是[xmr-stak](https://github.com/fireice-uk/xmr-stak) 的大幅修改后的开源加密货币挖矿版本。为了逃避检测，删除了所有不必要的字符串甚至整个函数。其余的字符串和函数被严重混淆。ESET安全产品将此恶意软件检测为 Win{32,64}/CoinMiner.Stantinko.。
+
 ## Use of mining proxies
+## 挖矿代理的使用
 
 CoinMiner.Stantinko doesn’t communicate with its [mining pool](https://en.wikipedia.org/wiki/Mining_pool) directly, but via proxies whose IP addresses are acquired from the description text of YouTube videos. A similar technique to hide data in descriptions of YouTube videos is used by the banking malware [Casbaneiro](https://www.welivesecurity.com/2019/10/03/casbaneiro-trojan-dangerous-cooking/). Casbaneiro uses much more legitimate-looking channels and descriptions, but for much the same purpose: storing encrypted C&Cs.
 
@@ -44,7 +49,19 @@ In earlier versions, the YouTube URL was hardcoded in CoinMiner.Stantinko binary
 
 We informed YouTube of this abuse; all the channels containing these videos were taken down.
 
+CoinMiner.Stantinko 不会直接与其[矿池](https://en.wikipedia.org/wiki/Mining_pool)进行通信，而是通过 IP 地址为从 YouTube 视频的描述中获取的代理进行通信。使用了与银行恶意软件[Casbaneiro](https://www.welivesecurity.com/2019/10/03/casbaneiro-trojan-dangerous-cooking/) 类似的技术在 YouTube 视频描述中隐藏数据。Casbaneiro 使用看起来更为合法的频道和描述，但目的大致相同：存储加密的 C&C。
+
+此类视频的描述由以十六进制格式的挖矿的代理 IP 地址字符串组成。例如，图1中显示的 YouTube 视频的描述为 "03101f1712dec626"，它对应于两个十六进制格式的 IP 地址- 03101f17 对应于十进制点分四进制格式的 3.16.31[.]23，而 12dec626 对应 18.222.198[.]38。截至本文，格式已稍作调整。 IP地址当前用 “!!!!” 括起来，简化了解析过程，并防止了 YouTube 视频 HTML 结构的更改导致解析器无法正常工作。
+
+![QS2kVI.png](https://s2.ax1x.com/2019/11/26/QS2kVI.png)
+图1.示例 YouTube 视频，其描述为模块提供了与矿池通信的 IP 地址
+
+在早期版本中，YouTube URL 在 CoinMiner.Stantinko 二进制文件中是硬编码编写的。当前，模块改为接收视频标识符作为命令行参数。然后，该参数用于以 https://www.youtube.com/watch?v=%PARAM% 的形式构造 YouTube URL。加密货币挖矿模块由 Stantinko的[BEDS](https://www.welivesecurity.com/wp-content/uploads/2017/07/Stantinko.pdf) 组件执行，或者由 rundll32.exe 通过我们未捕获到的的批处理文件执行，模块是从格式为 ％TEMP％\％RANDOM％\％RANDOM_GUID％.dll 本地文件系统位置加载。
+
+我们已将这种滥用告知 YouTube；包含这些视频的所有频道均已关闭。
+
 ## Cryptomining capabilities
+## 加密货币挖矿能力
 
 We have divided the cryptomining module into four logical parts, which represent distinct sets of capabilities. The main part performs the actual cryptomining; the other parts of the module are responsible for additional functions:
 
@@ -52,7 +69,15 @@ We have divided the cryptomining module into four logical parts, which represent
 * detecting security software
 * suspending the cryptomining function if the PC is on battery power or when a task manager is detected, to prevent being revealed by the user
 
+我们将密码挖掘模块分为四个逻辑部分，分别代表不同的功能集。主要部分执行实际的加密货币挖矿；模块的其他部分负责附加功能：
+
+* 暂停其他（即竞争性）加挖矿应用
+* 检测安全软件
+* 如果 PC 依靠电池供电或检测到任务管理器，则暂停加密采矿功能，以防止被用户发现
+
 ### Cryptomining
+
+### 加密货币挖矿
 
 At the very core of the cryptomining function lies the process of hashing, and communication with the proxy. The method of obtaining the list of mining proxies is described above; CoinMiner.Stantinko sets the communication with the first mining proxy it finds alive.
 
@@ -64,6 +89,16 @@ Downloading the hashing code with each execution enables the Stantinko group to 
 
 All instances of Stantinko’s cryptomining module we’ve analyzed mine Monero. We deduced this from the jobs provided by the mining proxy and the hashing algorithm. For example, Figure 2 is a job sent by one of the proxies.
 
+加密货币挖矿的核心取决于哈希处理以及代理通信。上面描述了获取代理列表的方法；CoinMiner.Stantinko 与它发现的第一个存活的挖矿代理建立通信。
+
+它的通信通过 TCP 进行，并由密钥为数字 pi 的前 26 个字符（包括小数点分隔符，硬编码为字符串"3,141592653589793238462643"）组成的 RC4 算法加密，然后由 base64 编码；我们看到的所有样本都使用相同的密钥。
+
+在通信开始时，从挖矿代理下载哈希算法的代码，并将其加载到内存中或在较早版本中先从库 libcr64.dll 拖到磁盘中。
+
+每次执行时下载哈希代码，可使 Stantinko 组在运行中更改代码。例如，此更改使得有可能适应现有货币中算法的调整，并切换到挖掘其他加密货币，以便在执行时挖掘利润最丰厚的加密货币。从远程服务器下载模块的核心部分并将其直接加载到内存中的主要好处是，这部分代码永远不会存储在磁盘上。此附加调整（较早版本中没有提供）让检测复杂化，因为这些算法中的模式对于检测安全产品而言是太微小。
+
+我们已经分析了 Stantinko 加密货币挖矿模块的所有实例。我们从挖掘代理和哈希算法提供的作业中得出以上结论。例如，图2是由代理之一发送的作业。
+
 ```
 {“error”:null,”result”:{“status”:”OK”}}
 {“method”:”job”,”params”:”blob”:”0b0bbfdee1e50567042dcfdfe96018227f25672544521f8ee2564cf8b4c3139a6a88c5f0b32664000000a1c8ee5c185ed2661daab9d0c454fd40e9f53f0267fe391bdb4eb4690395deb36018″,”job_id”:”281980000000000a10″,”target”:”67d81500″,”height”:1815711}}
@@ -74,11 +109,23 @@ We analyzed the hashing algorithm used and found that it was [CryptoNight R](htt
 
 Unlike the rest of CoinMiner.Stantinko, the hashing algorithm isn’t obfuscated, since obfuscation would significantly impair the speed of hash calculation and hence overall performance and profitability. However, the authors still made sure not to leave any meaningful strings or artifacts behind.
 
+图2.从矿池代理接​​收的挖矿作业示例
+
+我们分析了使用的哈希算法，发现它是[CryptoNight R](https://github.com/SChernykh/CryptonightR)。由于有多种使用该算法的加密货币，仅凭这个算法还不足以识别；它只会缩短列表。在提供的作业中，可以看到当时 [blockchain 的高度](https://coinguides.org/block-height/) 为1815711，因此我们不得不使用 CryptoNight R 在专用[区块浏览器](https://marketbusinessnews.com/financial-glossary/block-explorer/)中查找汇率，我们推导为门罗币。解剖字符串0b0bbfdee1e50567042dcfdfe96018227f25672544521f8ee2564cf8b4c3139a6a88c5f0b32664000000a1c8ee5c185ed2661daab9d0c454fd40e9f53f0267fe391bdb4eb4690395deb36018 显示之前区块的哈希（67042dcfdfe96018227f25672544521f8ee2564cf8b4c3139a6a88c5f0b32664）和时间戳（1555590859）确实在 区块高度为 1815711 时和[门罗币区块链匹配](https://xmrchain.net/search?value=1815711)。通过在门罗币的源代码中检查[生成器函数](https://github.com/monero-project/monero/blob/a48ef0a65afd2d89b9a81479f587b5b516a31c9c/src/cryptonote_basic/cryptonote_format_utils.cpp#L1207)查找 blob 的结构。生成器函数公开了另一个称为 [block header](https://github.com/monero-project/monero/blob/a48ef0a65afd2d89b9a81479f587b5b516a31c9c/src/cryptonote_basic/cryptonote_basic.h#L446) 的结构，该结构同时包含前一个块的哈希和时间戳。
+
+与 CoinMiner.Stantinko 的其余部分不同，哈希算法不会被混淆，因为混淆会显着影响哈希计算的速度，从而影响整体性能和盈利能力。但是，作者仍要确保不要留下任何有意义的字符串或组件。
+
+### 抑制其他加密货币挖矿软件
+
 ### Suspension of other cryptominers
 
 The malware enumerates running processes searching for other cryptominers. If any competitors are found, Stantinko suspends all their threads.
 
 CoinMiner.Stantinko considers a process to be a cryptominer if its command line contains a particular string, or a combination, which vary from sample to sample; for example:
+
+该恶意软件枚举运行进程来搜索其他加密货币挖矿软件。如果发现任何竞争对手，Stantinko 将中止其所有线程。
+
+如果 CoinMiner.Stantinko 在进程命令行中发现包含一个特定的字符串或组合（因样本而异），则认为该过程为加密货币挖矿软件。 例如：
 
 * minerd
 * minergate
@@ -103,7 +150,12 @@ These strings refer to the following legitimate cryptominers: https://github.com
 
 Of interest is that the Stantinko operators [are known](https://www.welivesecurity.com/2017/07/20/stantinko-massive-adware-campaign-operating-covertly-since-2012/) to have tried to get rid of competing code in the past. However, they relied on the legitimate AVZ Antiviral Toolkit fed with a script written in its built-in scripting language for this task.
 
+这些字符串引用以下合法的加密货币挖矿软件：https://github.com/pooler/cpuminer, https://minergate.com/, https://github.com/xmrig 甚至 https://github.com/fireice-uk/xmr-stak。有趣的是，这些正是 Stantinko 模块正是基于这些软件的。这些字符串还导致包含加密采矿功能的各种恶意软件样本。
+
+有趣的是，Stantinko 操纵者[已经被人知道](https://www.welivesecurity.com/2017/07/20/stantinko-massive-adware-campaign-operating-covertly-since-2012/)试图消灭竞争代码。但是，他们依靠合法的反病毒工具套件提供的内置脚本语言编写的脚本来完成此任务。
+
 ### Detection prevention
+### 检测预防
 
 CoinMiner.Stantinko temporarily suspends mining if it detects there’s no power supply connected to the machine. This measure, evidently aimed at portable computers, prevents fast battery draining … which might raise the user’s suspicion.
 
@@ -113,7 +165,16 @@ The malware also scans running processes to find security software and again tas
 
 Should a CRC-32 match be found, the CRC is written to a log file (api-ms-win-crt-io-l1-1-0.dll). The log file is presumably exfiltrated later by some Stantinko component that we have not seen, since there’s no other functionality related to it in this module.
 
+CoinMiner.Stantinko 如果检测到机器未连接任何电源，则将暂时中止挖矿。这项措施显然是针对笔记本电脑的，它可以防止电池快速耗尽……这可能会引起用户的怀疑。
+
+此外，如果检测到任务管理器应用程序（procexp64.exe，procexp.exe 或 taskmgr.exe 的进程）正在运行，它会暂时中止挖矿。
+
+该恶意软件还会扫描运行进程以查找安全软件，然后再次查找任务管理器。它计算出进程名称的 CRC-32，然后根据附录中硬编码的 CRC-32 检验和列表进行检查。通常，此技术可帮助逃避检测，因为这些安全产品的进程名称未包含在二进制文件中–通过不直接包含进程名称，增加了隐秘性。这也使分析者更难发现恶意软件作者目的所在，因为必须破解这些散列，从技术上讲，这与[密码破解](https://en.wikipedia.org/wiki/Password_cracking)是相同的问题。但是，使用已知进程名称的列表通常足以确定确切的名称。
+
+如果找到 CRC-32 匹配项，则将 CRC 写入日志文件（api-ms-win-crt-io-l1-1-0.dll）。该日志文件可能稍后会是我们未发现的 Stantinko 组件释放出的，因为此模块中没有与其相关的其他功能。
+
 ## Obfuscation
+## 混淆
 
 Besides its cryptomining features, CoinMiner.Stantinko is notable also for its obfuscation techniques aimed at avoiding detection and thwarting analysis. Some of those techniques are unique and we will describe them in detail in a follow-up article.
 
@@ -123,15 +184,26 @@ Our discovery shows that the criminals behind Stantinko continue to expand the w
 
 This remotely configured cryptomining module, distributed since at least August of 2018 and still active at the time of writing, shows this group continues to innovate and extend its money-making capabilities. Besides its standard cryptomining functionality, the module employs some interesting obfuscation techniques that we will disclose, along with some possible countermeasures, in an upcoming article.
 
-## Indicators of Compromise (IoCs)
+除了加密货币挖矿功能外，CoinMiner.Stantinko 还以其避免检测和阻碍分析的混淆技术而著称。其中一些技术是独特的，我们将在后续文章中对其进行详细描述。
 
-### ESET detection names
+## 总结
+
+我们的发现表明，Stantinko 背后的犯罪分子继续扩大利用其控制的僵尸网络的方式。他们之前的创新是在 Joomla 和 WordPress 网站上进行基于字典的分布式攻击来获取服务器凭据，目的可能是将其出售给其他罪犯。
+
+这个远程配置的加密矿模块自 2018 年 8 月开始分发，在撰写本文时仍处于活动状态，表明该团队正在不断创新并扩展其赚钱能力。除了其标准的加密挖掘功能外，该模块还采用了一些有趣的混淆技术，我们将在下一篇文章中介绍该技术以及一些可能的对策。
+
+## 威胁指示器 (IoCs)
+
+### ESET 检测名称
 
 Win32/CoinMiner.Stantinko
 Win64/CoinMiner.Stantinko
 
 ### SHA-1
+
 A full list of more than 1,500 hashes is available from [our GitHub repository](https://github.com/eset/malware-ioc/tree/master/stantinko).
+
+可以从[我们的 GitHub 仓库](https://github.com/eset/malware-ioc/tree/master/stantinko)获取 1500多 个哈希的完整列表。
 
 00F0AED42011C9DB7807383868AF82EF5454FDD8
 01504C2CE8180D3F136DC3C8D6DDDDBD2662A4BF
@@ -142,15 +214,20 @@ A full list of more than 1,500 hashes is available from [our GitHub repository](
 
 ### Filenames
 
+### 文件名
+
 api-ms-win-crt-io-l1-1-0.dll
 libcr64.dll
 C:\Windows\TEMP\%RANDOM%\%RANDOM_GUID%.dll
 
 ### Mutex name and RC4 key
+### 互斥体名以及 RC4 密钥
 
 “3,141592653589793238462643”
 
 ### YouTube URLs with mining proxy configuration data
+
+### 带有挖矿代理配置数据的 YouTube 链接
 
 * https://www.youtube[.]com/watch?v=kS1jXg99WiM
 * https*://www.youtube[.]com/watch?v=70g4kw2iRGo
@@ -164,6 +241,8 @@ C:\Windows\TEMP\%RANDOM%\%RANDOM_GUID%.dll
 * https*://www.youtube[.]com/watch?v=wJsbj8zPPNs
 
 ### IP addresses of mining proxies
+### 挖矿代理的 IP 地址
+
 * 3.16.150[.]123
 * 3.16.152[.]201
 * 3.16.152[.]64
@@ -221,29 +300,50 @@ C:\Windows\TEMP\%RANDOM%\%RANDOM_GUID%.dll
 * 52.15.184[.]25
 * 52.15.222[.]174
 
-### MITRE ATT&CK techniques
+### MITRE ATT&CK 技术
 <table>
-<th><td>Tactic</td>	<td>ID</td><td>Name</td><td>Description</td></th>
+<tr><td>技术</td>	<td>ID</td><td>名称</td><td>描述</td></tr>
 
-<tr><td>Execution</td>	<td>T1085</td>	<td>Rundll32</td>	<td>The module can be executed by rundll32.exe.</td>
-T1035	|Service |Execution|	The malware can be executed as a service.
-Defense |Evasion	|T1140|	Deobfuscate/Decode Files or Information	The module deobfuscates strings in its code during the execution process.
-T1027	Obfuscated Files or Information	The module obfuscates its code and strings in an apparent attempt to make analysis and detection difficult.
-T1102	Web Service	The malware acquires configuration data from description of YouTube videos.
-Discovery	T1063	Security Software Discovery	The malware acquires a list of running security products.
-Command and Control	T1090	Connection Proxy	The module uses proxies between itself and the mining pool.
-T1008	Fallback Channels	The module connects to another mining proxy if the initial one is inaccessible.
-T1095	Standard Non-Application Layer Protocol	The malware uses TCP for its communications.
-T1043	Commonly Used Port	The malware communicates over port 443.
-T1132	Data Encoding	The module encrypts then base64 encodes some network traffic.
-T1032	Standard Cryptographic Protocol	The module encrypts traffic with RC4.
-T1071	Standard Application Layer Protocol	Acquires configuration data from description of YouTube videos via HTTPS.
-Impact	T1496	Resource Hijacking	The module mines cryptocurrency.
+<tr><td rowspan="2">执行</td>	<td>T1085</td>	<td>Rundll32</td>	<td>该模块由rundll32.exe 执行。</td>
+<tr><td>T1035</td>	<td>服务执行</td>	<td>这个恶意软件可以以服务形式执行。</td></tr>
+<tr><td rowspan="3">防御规避</td><td>T1140</td><td>反混淆/解码文件或信息</td>	<td>The module deobfuscates strings in its code during the execution process.</td></tr>
+<tr><td>T1027</td>	<td>Obfuscated Files or Information</td>	<td>The module obfuscates its code and strings in an apparent attempt to make analysis and detection difficult.</td></tr>
+<tr><td>T1102</td>	<td>Web Service</td>	<td>The malware acquires configuration data from description of YouTube videos.</td></tr>
+<tr><td>Discovery</td>	<td>T1063</td>	<td>Security Software Discovery</td>	<td>The malware acquires a list of running security products.</td></tr>
+<tr><td rowspan="7">Command and Control</td>	<td>T1090</td>	<td>Connection Proxy</td>	<td>The module uses proxies between itself and the mining pool.</td></tr>
+<tr><td>T1008</td>	<td>Fallback Channels</td>	<td>The module connects to another mining proxy if the initial one is inaccessible.</td>
+<tr><td>T1095</td>	<td>Standard Non-Application Layer Protocol</td>	<td>The malware uses TCP for its communications.</td></tr>
+<tr><td>T1043</td>	<td>Commonly Used Port</td>	<td>The malware communicates over port 443.</td></tr>
+<tr><td>T1132</td>	<td>Data Encoding</td>	<td>The module encrypts then base64 encodes some network traffic.</td></tr>
+<tr><td>T1032</td>	<td>Standard Cryptographic Protocol</td>	<td>The module encrypts traffic with RC4.</td></tr>
+<tr><td>T1071</td>	<td>Standard Application Layer Protocol</td>	<td>Acquires configuration data from description of YouTube videos via HTTPS.</td></tr>
+<tr><td>Impact</td>	<td>T1496</td>	<td>Resource Hijacking</td>	<td>The module mines cryptocurrency.</td></tr>
 </table>
 
-## Appendix
+<table>
+<tr><td>技术</td>	<td>ID</td><td>名称</td><td>描述</td></tr>
+
+<tr><td rowspan="2">执行</td>	<td>T1085</td>	<td>Rundll32</td>	<td>该模块由rundll32.exe 执行。</td>
+<tr><td>T1035</td>	<td>服务执行</td>	<td>这个恶意软件可以以服务形式执行。</td></tr>
+<tr><td rowspan="3">防御规避</td><td>T1140</td><td>反混淆/解码文件或信息</td>	<td>在执行过程中，模块将对其代码中的字符串进行反混淆处理。</td></tr>
+<tr><td>T1027</td>	<td>混淆的文件或信息</td>	<td>该模块混淆了其代码和字符串，这显然使分析和检测变得困难。</td></tr>
+<tr><td>T1102</td>	<td>Web 服务</td>	<td>该恶意软件从 YouTube 视频的描述中获取配置数据。</td></tr>
+<tr><td>发现</td>	<td>T1063</td>	<td>安全软件发现</td>	<td>该恶意软件获取正在运行的安全产品列表。</td></tr>
+<tr><td rowspan="7">命令与控制</td>	<td>T1090</td>	<td>连接代理</td>	<td>该模块在其自身与矿池之间使用代理。</td></tr>
+<tr><td>T1008</td>	<td>备用频道</td>	<td>如果无法访问初始挖掘代理，则该模块将连接到另一个挖掘代理。</td>
+<tr><td>T1095</td>	<td>标准非应用层协议</td>	<td>该恶意软件使用 TCP 进行通信。</td></tr>
+<tr><td>T1043</td>	<td>常用端口</td>	<td>恶意软件通过端口 443 通信。</td></tr>
+<tr><td>T1132</td>	<td>数据编码</td>	<td>模块加密，然后 base64 编码一些网络流量。</td></tr>
+<tr><td>T1032</td>	<td>标准加密协议</td>	<td>该模块使用 RC4 加密流量。</td></tr>
+<tr><td>T1071</td>	<td>标准应用层协议</td>	<td>通过 HTTPS 从 YouTube 视频的描述中获取配置数据。</td></tr>
+<tr><td>影响</td>	<td>T1496</td>	<td>资源劫持</td>	<td>该模块挖掘加密货币。</td></tr>
+</table>
+
+## 附录
 
 CRC-32 checksums checked by CoinMiner.Stantinko and the filenames they equate to are listed below.
+
+下面列出了 CoinMiner.Stantinko 检查的 CRC-32 校验和以及它们对应的文件名。
 
 
 0xB18362C7	afwserv.exe
