@@ -1,7 +1,7 @@
 ---
 title: "Holiday -- hack the box"
 author: Neal
-tags: [安全, hack the box, walkthrough, linux, npm, XSS]
+tags: [安全, hack the box, walkthrough, linux, npm, XSS,HTB]
 categories: [htb]
 date: "2019-05-20" 
 ---

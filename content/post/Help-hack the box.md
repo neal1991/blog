@@ -1,7 +1,7 @@
 ---
 title: "Help -- hack the box"
 author: Neal
-tags: [安全, hack the box, walkthrough, linux, python]
+tags: [安全, hack the box, walkthrough, linux, python,HTB]
 categories: [htb]
 date: "2019-04-22" 
 ---
