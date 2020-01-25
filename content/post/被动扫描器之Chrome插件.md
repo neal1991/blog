@@ -3,6 +3,7 @@ title: "被动扫描器之插件篇"
 author: Neal
 tags: [安全, web 安全, chrome 插件]
 categories: [安全]
+keywords: [chrome extension,chrome 插件,被动扫描器,web安全,burp]
 date: "2019-09-28" 
 ---
 
