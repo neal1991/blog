@@ -6,6 +6,7 @@ description: "这个算法是汪悦在 Lane detection and tracking using B-snake
 边缘像素提取 
 我们使用Canny边缘检测来获得边缘映射和边缘定位映射。选择方差σ = 1"
 tags: [边缘检测,lane-detec,道路线]
+keywords: [边缘计算,机器学习,cv,CHEVP,计算机图像]
 categories: [计算机视觉]
 date: "2015-04-18 19:38:02"
 ---
