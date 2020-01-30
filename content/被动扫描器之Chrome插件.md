@@ -6,6 +6,8 @@ categories: [安全]
 date: "2019-09-28" 
 ---
 
+本文首发于 freebuf, https://www.freebuf.com/articles/web/219818.html
+
 最近被动扫描器的话题如火如荼，好多公司都在做自己的被动扫描器。而获取质量高的流量是被动扫描器起作用的关键。笔者主要开发了两个被动扫描器的插件，[r-forwarder](https://github.com/neal1991/r-forwarder) 以及 [r-forwarder-burp](https://github.com/neal1991/r-forwarder-burp)，两个插件的代码都在 Github 上开源。两个插件分别为 Chrom 插件以及 Burp 插件，本文也从笔者开发这两个插件的经验来聊一聊被动扫描器中插件的开发。
 
 ## Chrome 插件
