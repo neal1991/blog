@@ -102,3 +102,7 @@ OSCP 是一个实战型的考试，考试时间为 24 小时，中途可以休�
 
 有多种渠道可以和其它学员交流，包括[官方论坛](https://forums.offensive-security.com/)以及 [NetSecFocus](https://mm.netsecfocus.com/join/)，也可以通过其它社交媒体获取最新信息。
 
+# Reference
+
+* https://www.offensive-security.com/offsec/pwk-oscp-faq/?utm_campaign=Courses&utm_content=117372366&utm_medium=social&utm_source=twitter&hss_channel=tw-134994790
+
