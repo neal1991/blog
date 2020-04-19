@@ -21,4 +21,4 @@ sudo yum install cmake make gcc gcc-c++ flex bison libpcap-devel openssl-devel p
 
 Mac 上需要的依赖更少一点，首先需要确保安装了 `xcode-select`，如果没有安装，可以通过 `xcode-select --install` 来进行安装。Mac 上只需要安装依赖 `cmake, swig, openssl, bison` 即可，可以通过 Homebrew 来进行安装。
 
-依赖包
+依赖包安装完毕之后就可以安装 Zeek，其实是可以通过包管理工具来进行安装的，不过这里我推荐使用基于源码的安装方式，安装比较简单而且还容易排查问题。
