@@ -98,10 +98,10 @@ if name == "main":
     brute_force("hello_world")
 ```
 
-
-                myapp            	                myapp_card            	                myapp_card_perform            
-                枚举            	                121            	                276            	                526            
-                与运算            	                35            	                70            	                126            
+|    	|  myapp 	|myapp_card    	|   myapp_card_perform	|
+|---	|---	|---	|---	|
+|   枚举	|   121	|  276 	|   526	|
+|   与运算	|  35 	|70   	| 126  	|   	
 
 # 总结
 
