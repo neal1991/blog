@@ -21,4 +21,56 @@ sudo yum install cmake make gcc gcc-c++ flex bison libpcap-devel openssl-devel p
 
 Mac 上需要的依赖更少一点，首先需要确保安装了 `xcode-select`，如果没有安装，可以通过 `xcode-select --install` 来进行安装。Mac 上只需要安装依赖 `cmake, swig, openssl, bison` 即可，可以通过 Homebrew 来进行安装。
 
-依赖包安装完毕之后就可以安装 Zeek，其实是可以通过包管理工具来进行安装的，不过这里我推荐使用基于源码的安装方式，安装比较简单而且还容易排查问题。
+依赖包安装完毕之后就可以安装 Zeek，其实是可以通过包管理工具来进行安装的，不过这里我推荐使用基于源码的安装方式，安装比较简单而且还容易排查问题。从 Zeek 的 Github [Release](https://github.com/zeek/zeek/releases) 即可下载源码包，目前我安装的是 3.0.0 版本，注意一点是，如果使用最新的版本，可能需要 7.0 以上版本的 cmake，因为需要 C++17 的语言特性。而一般镜像源默认的 cmake 版本是4+版本，所以如果你的服务器也无法上互联网，建议可以安装 3.0.0 版本。
+
+```
+./configure & make & make install
+```
+
+安装使用上面的命令就可以了，不过 `make` 的时间还是比较长的，这个取决于你机器的性能，不过一般安装还是需要半个小时到一个小时，这也是因为 C++ 编译速度比较慢的原因。
+
+## 集群安装
+
+集群安装的方式和单机的方式不太一样。之前在测试环境使用的都是单机模式，集群则可以管理多个实例，后来我也尝试了通过集群的方式来进行安装。如果需要配置集群的话，建议安装 PF_RING，PF_RING 可以加速网络包的速度。对于 Zeek 集群上的每个 worker 都是需要安装 PF_RING，但只需要在 manager 上安装 Zeek 就可以了，可以通过 zeekctl 在其它 worker 上安装 Zeek。不过需要确保可以通过 ssh 到其它 woker 机器上，可以通过公钥的形式来实现，将 manager 的公钥放到其它 worker 的 authorized_keys 中。
+
+PF_RING 的安装步骤相对来说多了一些，但也是按照说明安装即可。和上面的单机安装方式不同的是集群安装的方式的时候，安装 Zeek 需要配置前缀。
+
+安装 PF_RING
+
+```
+tar xvzf PF_RING-5.6.2.tar.gz
+cd PF_RING-5.6.2/userland/lib
+./configure --prefix=/opt/pfring
+make install
+
+cd ../libpcap
+./configure --prefix=/opt/pfring
+make install
+
+cd ../tcpdump-4.1.1
+./configure --prefix=/opt/pfring
+make install
+
+cd ../../kernel
+make
+make install
+
+modprobe pf_ring enable_tx_capture=0 min_num_slots=32768
+```
+
+安装 Zeek
+
+```
+./configure --with-pcap=/opt/pfring
+make 
+make install
+```
+
+确保 Zeek 正确关联到了 PF_RING 中的 libpcap 库中
+
+```
+ldd /usr/local/zeek/bin/zeek | grep pcap
+      libpcap.so.1 => /opt/pfring/lib/libpcap.so.1 (0x00007fa6d7d24000)
+``
+
+zd
