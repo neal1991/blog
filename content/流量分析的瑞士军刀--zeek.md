@@ -73,4 +73,19 @@ ldd /usr/local/zeek/bin/zeek | grep pcap
       libpcap.so.1 => /opt/pfring/lib/libpcap.so.1 (0x00007fa6d7d24000)
 ``
 
-zd
+接着就是通过 PF_RING 来进行 Zeekctl 的配置，Zeek 的安装路径一般都在 `/usr/local/zeek`。通过 `/usr/local/zeek/etc/node.cfg` 来进行集群结点的配置，在集群配置中，manager, proxy 以及 worker 是必须的，如果不设置 logger，默认将 manager 作为 logger。
+
+```
+[worker-1]
+type=worker
+host=10.0.0.50
+interface=eth0
+lb_method=pf_ring
+lb_procs=10
+pin_cpus=2,3,4,5,6,7,8,9,10,11
+```
+
+接下来只需要通过 `zeekctl install` 就会在其它实例上来进行安装了。如果安装过程中出现了问题，可以通过 `zeekctl diag woker-1` 来排查具体的原因。
+
+## Zeek 结合被动扫描器
+
