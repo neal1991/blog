@@ -87,5 +87,89 @@ pin_cpus=2,3,4,5,6,7,8,9,10,11
 
 接下来只需要通过 `zeekctl install` 就会在其它实例上来进行安装了。如果安装过程中出现了问题，可以通过 `zeekctl diag woker-1` 来排查具体的原因。
 
-## Zeek 结合被动扫描器
+## Zeek 结合被动扫描器的玩法
 
+上面讲的都是 Zeek 的安装，下面聊一下 Zeek 和被动扫描器的结合。被动扫描器的效果往往取决于流量的质量和数量，在我们的实际实践中，发现通过 Zeek 获取的流量占我们被动扫描器测试流量的绝大一部分。Zeek 对于 http 解析的日志都会存储在 /usr/local/zeek/logs 中。如果 Zeek 是启动状态，那么 http.log 的路径会在 /usr/local/zeel/logs/current 中，而历史日志则会被打包。如果使用 Zeek 去捕获流量的时候，日志往往会占很大的存储，所以要记得修改 Zeek 日志的存储路径，否则很容易就把系统盘塞满。
+
+### 通过脚本自定义 http.log
+
+http.log 中其实已经包含了丰富的字段，常见的一些字段如下：
+
+```
+# ts          uid          orig_h        orig_p  resp_h         resp_p
+1311627961.8  HSH4uV8KVJg  192.168.1.100 52303   192.150.187.43 80
+```
+
+不过里面还有一些信息是缺失的，比如一些 http 请求头以及 POST 请求的请求体，为了添加这些字段，可以通过自定义 Zeek 脚本来实现，Zeek 脚本的能力真的非常强大，通过脚本其实有很多更高级的玩法。
+
+添加请求头
+
+```
+@load base/protocols/http/main
+
+module HTTP;
+
+export {
+	redef record Info += {
+	      header_host:    string  &log    &optional;
+            header_accept:  string  &log    &optional;
+            header_accept_charset:  string  &log    &optional;
+            header_accept_encoding:  string  &log    &optional;
+            header_accept_language:  string  &log    &optional;
+            header_accept_ranges:  string  &log    &optional;
+            header_authorization:  string  &log    &optional;
+            header_connection:  string  &log    &optional;
+            header_cookie:  string  &log    &optional;
+            header_content_length:  string  &log    &optional;
+            header_content_type:  string  &log    &optional;
+	};
+}
+
+event http_header(c: connection, is_orig: bool, name: string, value: string) &priority=3
+        {
+        if ( ! c?$http )
+                return;
+
+        if ( is_orig )
+                {
+                if ( log_client_header_names )
+                        {
+				switch ( name ) {
+                                case "HOST":
+                                    c$http$header_host = value;
+                                    break;
+                                case "ACCEPT":
+                                    c$http$header_accept = value;
+                                    break;
+                                case "ACCEPT-CHARSET":
+                                    c$http$header_accept_charset = value;
+                                    break;
+                                case "ACCEPT-ENCODING":
+				                    c$http$header_accept_encoding = value;
+                                    break;
+                                case "ACCEPT-LANGUAGE":
+                                    c$http$header_accept_language = value;
+                                    break;
+                                case "ACCEPT-RANGES":
+                                    c$http$header_accept_ranges = value;
+                                    break;
+                                case "AUTHORIZATION":
+                                    c$http$header_authorization = value;
+                                    break;
+                                case "CONNECTION":
+                                    c$http$header_connection = value;
+                                    break;
+                                case "COOKIE":
+                                    c$http$header_cookie = value;
+                                    break;
+                                case "CONTENT-LENGTH":
+                                    c$http$header_content_length = value;
+                                    break;
+                                case "CONTENT-TYPE":
+                                    c$http$header_content_type = value;
+                                    break;
+                                }
+			}
+                }
+        }
+```
