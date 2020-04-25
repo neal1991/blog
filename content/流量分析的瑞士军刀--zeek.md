@@ -71,7 +71,7 @@ make install
 ```
 ldd /usr/local/zeek/bin/zeek | grep pcap
       libpcap.so.1 => /opt/pfring/lib/libpcap.so.1 (0x00007fa6d7d24000)
-``
+```
 
 接着就是通过 PF_RING 来进行 Zeekctl 的配置，Zeek 的安装路径一般都在 `/usr/local/zeek`。通过 `/usr/local/zeek/etc/node.cfg` 来进行集群结点的配置，在集群配置中，manager, proxy 以及 worker 是必须的，如果不设置 logger，默认将 manager 作为 logger。
 
@@ -102,7 +102,7 @@ http.log 中其实已经包含了丰富的字段，常见的一些字段如下�
 
 不过里面还有一些信息是缺失的，比如一些 http 请求头以及 POST 请求的请求体，为了添加这些字段，可以通过自定义 Zeek 脚本来实现，Zeek 脚本的能力真的非常强大，通过脚本其实有很多更高级的玩法。
 
-添加请求头
+#### 添加请求头
 
 ```
 @load base/protocols/http/main
@@ -111,7 +111,7 @@ module HTTP;
 
 export {
 	redef record Info += {
-	      header_host:    string  &log    &optional;
+	        header_host:    string  &log    &optional;
             header_accept:  string  &log    &optional;
             header_accept_charset:  string  &log    &optional;
             header_accept_encoding:  string  &log    &optional;
@@ -172,4 +172,93 @@ event http_header(c: connection, is_orig: bool, name: string, value: string) &pr
 			}
                 }
         }
+```
+
+#### 添加 POST 请求体
+
+```
+export {
+	## The length of POST bodies to extract.
+	const http_post_body_length = 200 &redef;
+}
+
+redef record HTTP::Info += {
+	postdata: string &log &optional;
+};
+
+event log_post_bodies(f: fa_file, data: string)
+	{
+	for ( cid in f$conns )
+		{
+		local c: connection = f$conns[cid];
+		if ( ! c$http?$postdata )
+			c$http$postdata = "";
+
+		# If we are already above the captured size here, just return.
+		if ( |c$http$postdata| > http_post_body_length )
+			return;
+
+		c$http$postdata = c$http$postdata + data;
+		if ( |c$http$postdata| > http_post_body_length )
+			{
+			c$http$postdata = c$http$postdata[0:http_post_body_length] + "...";
+			}
+		}
+	}
+
+event file_over_new_connection(f: fa_file, c: connection, is_orig: bool)
+	{
+	if ( is_orig && c?$http && c$http?$method && c$http$method == "POST" )
+		{
+		Files::add_analyzer(f, Files::ANALYZER_DATA_EVENT, [$stream_event=log_post_bodies]);
+		}
+	}
+```
+
+通过上述的脚本就可以添加一些请求头以及 POST 请求的请求体，完整的脚本可以参考 [http-custom](https://github.com/neal1991/http-custom)。脚本编写完毕，需要通过 zeekctl 部署才能生效，步骤也非常简单。
+
+```
+mv http-custom /usr/local/bro/share/bro/base/protocols
+echo '@load base/protocols/http-custom' >> /usr/local/bro/share/bro/site/local.bro
+zeekctl deploy
+```
+
+
+对于被动扫描器，我们目前的方案是通过 Filebeat 去采集日志然后输出给 Logstash 做处理，处理完毕之后再输出到 Kafka。
+
+![JsZ5tI.png](https://s1.ax1x.com/2020/04/25/JsZ5tI.png)
+
+Filebeat 加 Logstash 适用于多种场景，在日常的各种日志采集场景都能派上用场。通过 Logstash 可以完成日志灵活的处理，因为 Logstash 里面包含了各种丰富的插件，几乎可以完成对于日志的任何操作。比如为了保证 POST 请求体保证传输的正确性，可以通过 base64 来进行编码。
+
+通过这种方案还有一个优势就是我们还可以将我们的日志输出到别的地方，比如 es，这个也可以方便后续排查问题。
+
+不过我在后面又发现了一种新的方案，可以通过 Zeek 的插件，将 http.log 直接输出到 Kafka，这个方案的优点主要是更高效，同时也节省了一些成本，毕竟 Logstash 需要的机器性能还是比较大的。对于这个方案主要是两个问题，第一个问题是首先需要处理好日志的格式，这样保证后续处理地便利性；第二个问题是如何将日志直接从 Zeek 输出到 Kafka。其实我是先解决了第一个问题再解决第二个问题的，因为第二个问题的处理的方式更灵活，得益于 Zeek 脚本的便利性，肯定是可以实现的。
+
+[metron-bro-plugin-kafka](https://github.com/apache/metron-bro-plugin-kafka) 是 Apache 官方的一个 Bro 的插件，不过因为 Zeek3.0.0 是可以兼容的，所以这个插件是可以使用的。这个插件有两种安装方式，一种是通过 bro-pkg (Bro 的官方包管理工具)来进行安装，另外一种则是通过手工安装。由于网络的原因，我更推荐使用手工安装的方式，我尝试通过 bro-pkg 的方式来进行安装，速度特别慢。
+
+1. 安装 librdkafka
+
+```
+curl -L https://github.com/edenhill/librdkafka/archive/v0.11.5.tar.gz | tar xvz
+cd librdkafka-0.11.5/
+./configure --enable-sasl
+make
+sudo make install
+```
+
+2. 安装插件
+
+```
+./configure --bro-dist=$BRO_SRC
+make
+sudo make install
+```
+
+这里有一个坑就是安装文档根本就没有说 $BRO_SRC 是哪个路径，所以安装的时候总是报错，后来才弄清楚这个路径其实就是当初 Zeek 解压后的路径，即 Zeek 安装包的路径。
+
+3. 验证结果
+
+```
+zeek -N Apache::Kafka
+Apache::Kafka - Writes logs to Kafka (dynamic, version 0.3)
 ```
