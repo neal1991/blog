@@ -262,3 +262,5 @@ sudo make install
 zeek -N Apache::Kafka
 Apache::Kafka - Writes logs to Kafka (dynamic, version 0.3)
 ```
+
+接着就是将 http 的日志进行处理，因为在原始的 http.log 中有还多字段是我们并不需要的。
