@@ -263,4 +263,8 @@ zeek -N Apache::Kafka
 Apache::Kafka - Writes logs to Kafka (dynamic, version 0.3)
 ```
 
-接着就是将 http 的日志进行处理，因为在原始的 http.log 中有还多字段是我们并不需要的。
+接着就是将 http 的日志进行处理，因为在原始的 http.log 中有还多字段是我们并不需要的。在研究了官方文档之后，可以通过 [Filters](https://docs.zeek.org/en/master/frameworks/logging.html#filters) 可以定义一个新的日志文件，可以拷贝其它的日志输出到新的文件，可以自定义字段，方式比较灵活。另外还可以通过 Writer 可以将日志写入到 sqlite 数据库中。不过，这里我们主要是通过插件将日志写入到 Kafka。
+
+## 总结
+
+其实 Zeek 很有喝多高级玩法，你完全可以将 Zeek 改造成一个 IDS 产品。Zeek 脚本的强大能力赋予其无限的可能性。本文主要就是就 Zeek 的安装部署以及结合被动扫描器的一些用法的介绍。后续如果更进一步地探索，会做更多的分享。
