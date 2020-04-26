@@ -228,7 +228,14 @@ zeekctl deploy
 
 ![JsZ5tI.png](https://s1.ax1x.com/2020/04/25/JsZ5tI.png)
 
-Filebeat 加 Logstash 适用于多种场景，在日常的各种日志采集场景都能派上用场。通过 Logstash 可以完成日志灵活的处理，因为 Logstash 里面包含了各种丰富的插件，几乎可以完成对于日志的任何操作。比如为了保证 POST 请求体保证传输的正确性，可以通过 base64 来进行编码。
+Filebeat 加 Logstash 适用于多种场景，在日常的各种日志采集场景都能派上用场。通过 Logstash 可以完成日志灵活的处理，因为 Logstash 里面包含了各种丰富的插件，几乎可以完成对于日志的任何操作。比如为了保证 POST 请求体保证传输的正确性，可以通过 base64 来进行编码。通过 [logstash-filter-base64](https://github.com/tiwilliam/logstash-filter-base64) 可以遍历地实现字段的编码或者解码。
+
+```
+base64 {
+     field => "postdata"
+     action => "encode"
+   }
+```
 
 通过这种方案还有一个优势就是我们还可以将我们的日志输出到别的地方，比如 es，这个也可以方便后续排查问题。
 
