@@ -228,7 +228,7 @@ zeekctl deploy
 
 ![JsZ5tI.png](https://s1.ax1x.com/2020/04/25/JsZ5tI.png)
 
-Filebeat 加 Logstash 适用于多种场景，在日常的各种日志采集场景都能派上用场。通过 Logstash 可以完成日志灵活的处理，因为 Logstash 里面包含了各种丰富的插件，几乎可以完成对于日志的任何操作。比如为了保证 POST 请求体保证传输的正确性，可以通过 base64 来进行编码。通过 [logstash-filter-base64](https://github.com/tiwilliam/logstash-filter-base64) 可以遍历地实现字段的编码或者解码。
+Filebeat 加 Logstash 适用于多种场景，在日常的各种日志采集场景都能派上用场。通过 Logstash 可以完成日志灵活的处理，因为 Logstash 里面包含了各种丰富的插件，几乎可以完成对于日志的任何操作。比如为了保证 POST 请求体保证传输的正确性，可以通过 base64 来进行编码。通过 [logstash-filter-base64](https://github.com/tiwilliam/logstash-filter-base64) 可以遍历地实现字段的编码或者解码。通过 filter 中的 mutate 插件可以增加字段或者删除字段。
 
 ```
 base64 {
@@ -237,9 +237,11 @@ base64 {
    }
 ```
 
-通过这种方案还有一个优势就是我们还可以将我们的日志输出到别的地方，比如 es，这个也可以方便后续排查问题。
+通过这种方案还有一个优势就是我们还可以将我们的日志输出到别的地方，比如 es，这个也可以方便后续排查日志问题。
 
 不过我在后面又发现了一种新的方案，可以通过 Zeek 的插件，将 http.log 直接输出到 Kafka，这个方案的优点主要是更高效，同时也节省了一些成本，毕竟 Logstash 需要的机器性能还是比较大的。对于这个方案主要是两个问题，第一个问题是首先需要处理好日志的格式，这样保证后续处理地便利性；第二个问题是如何将日志直接从 Zeek 输出到 Kafka。其实我是先解决了第一个问题再解决第二个问题的，因为第二个问题的处理的方式更灵活，得益于 Zeek 脚本的便利性，肯定是可以实现的。
+
+[![JhNRET.png](https://s1.ax1x.com/2020/04/27/JhNRET.png)](https://imgchr.com/i/JhNRET)
 
 [metron-bro-plugin-kafka](https://github.com/apache/metron-bro-plugin-kafka) 是 Apache 官方的一个 Bro 的插件，不过因为 Zeek3.0.0 是可以兼容的，所以这个插件是可以使用的。这个插件有两种安装方式，一种是通过 bro-pkg (Bro 的官方包管理工具)来进行安装，另外一种则是通过手工安装。由于网络的原因，我更推荐使用手工安装的方式，我尝试通过 bro-pkg 的方式来进行安装，速度特别慢。
 
@@ -274,4 +276,4 @@ Apache::Kafka - Writes logs to Kafka (dynamic, version 0.3)
 
 ## 总结
 
-其实 Zeek 很有喝多高级玩法，你完全可以将 Zeek 改造成一个 IDS 产品。Zeek 脚本的强大能力赋予其无限的可能性。本文主要就是就 Zeek 的安装部署以及结合被动扫描器的一些用法的介绍。后续如果更进一步地探索，会做更多的分享。
+其实 Zeek 很有喝多高级玩法，你完全可以将 Zeek 改造成一个 IDS 产品。Zeek 脚本的强大能力赋予其无限的可能性，比如在流量中发现 sql 注入。本文主要就是就 Zeek 的安装部署以及结合被动扫描器的一些用法的介绍。后续如果更进一步地探索，会做更多的分享。
