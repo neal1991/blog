@@ -38,8 +38,8 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 # Add your own params here
 [params]
   author = "Neal"
-  avatar = "/img/avatar.jpg"
-  wechat = "/img/wechat.jpg"
+  avatar = "https://cdn.jsdelivr.net/gh/neal1991/neal1991.github.io/img/avatar.jpg"
+  wechat = "https://cdn.jsdelivr.net/gh/neal1991/neal1991.github.io/img/wechat.jpg"
   seotitle = "Neal 的博客"
   subtitle = "Development & Security"
   description = "全栈工程师的进击"
@@ -55,7 +55,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
 
   # Bing Webmaster
   # https://www.bing.com/toolbox/webmaster/
-  msValidate = "22596E34341DD1D17D6022C44647E587"
+  #msValidate = "22596E34341DD1D17D6022C44647E587"
 
   # Baidu Webmaster (China Only)
   # https://zhanzhang.baidu.com/
