@@ -1,4 +1,5 @@
-baseURL = "https://madneal.com"
+#baseURL = "https://madneal.com"
+baseURL = "https://cdn.jsdelivr.net/gh/neal1991/neal1991.github.io"
 languageCode = "en"
 title = "Neal's Blog"
 theme = "hugo-nuo"
