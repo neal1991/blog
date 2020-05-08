@@ -274,6 +274,34 @@ Apache::Kafka - Writes logs to Kafka (dynamic, version 0.3)
 
 接着就是将 http 的日志进行处理，因为在原始的 http.log 中有还多字段是我们并不需要的。在研究了官方文档之后，可以通过 [Filters](https://docs.zeek.org/en/master/frameworks/logging.html#filters) 可以定义一个新的日志文件，可以拷贝其它的日志输出到新的文件，可以自定义字段，方式比较灵活。另外还可以通过 Writer 可以将日志写入到 sqlite 数据库中。不过，这里我们主要是通过插件将日志写入到 Kafka。
 
+我们的目标是获取 http.log 中的部分字段，所以可以通过 Filters 来实现日志文件的复制并且对日志字段进行过滤，基于 KafkaWriter 将日志文件直接写入到 Kafka 中。为了定义 Filter，在 `/usr/local/zeek/share/zeek/base/protocols/http/main.zeek` 的 zeek_init 函数中进行定义：
+
+```
+event zeek_init() &priority=5
+     {
+     Log::create_stream(HTTP::LOG, [$columns=Info, $ev=log_http, $path="http"]);
+     Analyzer::register_for_ports(Analyzer::ANALYZER_HTTP, ports);
+     local filter: Log::Filter =
+         [
+         $name="kafka-http",
+         $include=set("host","id.resp_p","uri"),
+         $writer=Log::WRITER_KAFKAWRITER
+         ];
+      Log::add_filter(HTTP::LOG, filter);
+     }
+```
+
+另外，记得在 `/usr/local/zeek/share/zeek/site/local.zeek` 中定义 Kafka 的 topic 和 Broker:
+
+```
+redef Kafka::topic_name = "bro-test";
+redef Kafka::kafka_conf = table(
+    ["metadata.broker.list"] = "127.0.0.1:9092"
+);
+```
+
+最后记得使用 `zeekctl deploy` 重新部署一下，这样脚本就生效了，日志就可以直接写入到 Kafka 中，大大提高效率。
+
 ## 总结
 
 其实 Zeek 很有喝多高级玩法，你完全可以将 Zeek 改造成一个 IDS 产品。Zeek 脚本的强大能力赋予其无限的可能性，比如在流量中发现 sql 注入。本文主要就是就 Zeek 的安装部署以及结合被动扫描器的一些用法的介绍。后续如果更进一步地探索，会做更多的分享。
