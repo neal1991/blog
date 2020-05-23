@@ -11,3 +11,4 @@ date: "2020-05-18"
 
 ![YWmZlt.png](https://s1.ax1x.com/2020/05/18/YWmZlt.png)
 
+在 filter 里面，其实可以使用 mutate 插件来修改字段的，但是在 output 里面，我没有找到有什么办法可以来进行区分。这个问题困扰了很长时间，直到别人告诉我一个新的插件，clone。
