@@ -1,7 +1,7 @@
 ---
-title: "全栈工程师的成长"
+title: "imac 2020，真香？"
 author: Neal
-tags: [架构,全栈,开发,安全,网络安全,security,development,web security,]
-categories: [开发]
-date: "2020-08-16" 
+tags: [电脑,苹果,imac,数码]
+categories: [数码]
+date: "2020-09-19" 
 ---
