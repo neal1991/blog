@@ -1,7 +1,8 @@
 ---
 title: "一键 Shell，我的 OSWE 之旅"
 author: Neal
-tags: [全栈,开发,安全,网络安全,security,development,web security,code review,OSWE,AWAE,Offsec, Offensive Security]
+tags: [全栈,开发,安全,网络安全,security,development,web security,code review,OSWE,AWAE,Offsec, Offensive Security,OSWE考试]
+keywords: [OSWE,OFFSEC,OSWE 考试,AWAE,certification,security certifications]
 categories: [安全]
 date: "2020-09-06" 
 ---
