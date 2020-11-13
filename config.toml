@@ -27,7 +27,7 @@ copyright = "© This post is licensed under a Creative Commons Attribution-NonCo
   name = "Works"
   weight = 20
   identifier = "works"
-  url = "https://github.com/neal1991"
+  url = "https://github.com/madneal"
 
 [[menu.main]]
   name = "Tags"
