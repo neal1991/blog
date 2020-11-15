@@ -1,6 +1,6 @@
 [submodule "public"]
 	path = public
 	url = https://github.com/madneal/madneal.github.io.git
-[submodule "neal1991.github.io"]
-	path = neal1991.github.io
+[submodule "madneal.github.io"]
+	path = madneal.github.io
 	url = https://github.com/madneal/madneal.github.io
