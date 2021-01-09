@@ -1,6 +1,6 @@
 baseURL = "https://madneal.com"
 #baseURL = "https://cdn.jsdelivr.net/gh/neal1991/neal1991.github.io"
-languageCode = "en"
+languageCode = "zh"
 title = "Neal's Blog"
 theme = "hugo-nuo"
 enableRobotsTXT = true
