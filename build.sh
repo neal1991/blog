@@ -32,6 +32,6 @@ git commit -m "$msg"
 # Push source and build repos.
 git pull origin master
 git push origin master
-git commit -m "rebuild site" --allow-empty
+# git commit -m "rebuild site" --allow-empty
 git push origin master
 
