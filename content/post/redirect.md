@@ -1,5 +1,5 @@
 ---
-title: "一个开放重定向绕过引发的血案"
+title: "白名单，被谁饶过了？"
 author: Neal
 tags: [架构,apache dubbo,开源,开放重定向,open redirect, SSRF, 开发,安全,代码审计,security,development,web security,]
 keywords: [架构,apache dubbo,开源,开放重定向,open redirect, SSRF, 开发,安全,代码审计,security,development,web security,]
