@@ -126,12 +126,4 @@ proxy_pass http://127.0.0.1:8888;
 
 目前基于新的框架做的重构对于前端方面说可以说是做了非常大的改善，不管是在功能性上亦或是美观性都强了不少。另外，由于完善的权限控制，这也对于系统的控制性的加强也有帮助。同时，由于技术栈的基础，后续开发也会更加的便捷。后续的计划可能是增加更多的搜索源并且修复现在存在的一些小 BUG 吧。
 
-## 404StarLink 2.0 - Galaxy
-
-![](https://github.com/knownsec/404StarLink-Project/raw/master/logo.png)
-
-GShark 是 404Team [星链计划2.0](https://github.com/knownsec/404StarLink2.0-Galaxy)中的一环，如果对 GShark 有任何疑问又或是想要找小伙伴交流，可以参考星链计划的加群方式。
-
-- [https://github.com/knownsec/404StarLink2.0-Galaxy#community](https://github.com/knownsec/404StarLink2.0-Galaxy#community)
-
 
