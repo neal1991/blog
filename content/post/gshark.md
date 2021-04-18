@@ -3,7 +3,7 @@ title: "GShark 重大重构重新发布"
 author: Neal
 tags: [开发,安全,应用安全,security,development,web security,chrome,cross-site,csrf]
 categories: [安全]
-date: "2021-02-17" 
+date: "2021-04-17" 
 ---
 
 GShark 作为一款开源的敏感信息监测工具其实差不多维护也有两年多的时间。这款产品其实笔者在自己的公司或者平常都在使用，也通过这个工具发现多多起内部的信息泄露事件以及外部的一些的信息泄露事件。其实这种类似的开源工具数不胜数，大家的核心功能其实就是监控 Github 上面的信息，但是笔者要想把这种产品做得更好一点，就要从功能性、易用性角度来做进一步拓展。最近，对 [GShark](https://github.com/madneal/gshark) 做了较大的重构，前后端都完成了比较大的重构，之前老的版本也有写过[文章](https://mp.weixin.qq.com/s/rKdz9V1Vx548FvPHwNBn0Q)介绍，所以关于这个工具的起源就不多介绍了，主要对这次重构和新的架构做介绍。
